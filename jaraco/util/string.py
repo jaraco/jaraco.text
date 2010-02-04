@@ -64,9 +64,8 @@ class FoldedCase(str):
 		pattern = re.compile(re.escape(splitter), re.I)
 		return pattern.split(self, maxsplit)
 
-def local_fmt(string):
+def local_format(string):
 	"""
-	lfmt (local format) will format the string using variables
-	in the caller's local namespace.
+	format the string using variables in the caller's local namespace.
 	"""
 	return string.format(**inspect.currentframe().f_back.f_locals)
