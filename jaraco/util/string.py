@@ -1,4 +1,5 @@
 import re
+import inspect
 from itertools import starmap
 from jaraco.util.functools import compose
 
@@ -67,5 +68,9 @@ class FoldedCase(str):
 def local_format(string):
 	"""
 	format the string using variables in the caller's local namespace.
+	
+	>>> a = 3
+	>>> local_format("{a:5}")
+	'    3'
 	"""
 	return string.format(**inspect.currentframe().f_back.f_locals)
