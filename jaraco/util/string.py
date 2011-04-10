@@ -1,7 +1,11 @@
+from __future__ import absolute_import
 import re
 import inspect
-from itertools import starmap
-from jaraco.util.functools import compose
+import itertools
+import functools
+from .functools import compose
+from .exceptions import throws_exception
+
 
 def substitution(old, new):
 	"""
@@ -17,7 +21,7 @@ def multi_substitution(*substitutions):
 	>>> multi_substitution(('foo', 'bar'), ('bar', 'baz'))('foo')
 	'baz'
 	"""
-	substitutions = starmap(substitution, substitutions)
+	substitutions = itertools.starmap(substitution, substitutions)
 	# compose function applies last function first, so reverse the
 	#  substitutions to get the expected order.
 	substitutions = reversed(tuple(substitutions))
@@ -74,3 +78,18 @@ def local_format(string):
 	'    3'
 	"""
 	return string.format(**inspect.currentframe().f_back.f_locals)
+
+def is_decodable(value):
+	"""
+	Return True if the supplied value is decodable (using the 'unicode'
+	constructor and thus the default encoding).
+	"""
+	return not throws_exception(functools.partial(unicode, value),
+		UnicodeDecodeError)
+	
+def is_binary(value):
+	"""
+	Return True if the value appears to be binary (that is, it's a byte
+	string and isn't decodable).
+	"""
+	return isinstance(value, bytes) and not is_decodable(value)
