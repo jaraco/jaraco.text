@@ -95,3 +95,22 @@ def is_binary(value):
 	string and isn't decodable).
 	"""
 	return isinstance(value, bytes) and not is_decodable(value)
+
+def trim(s):
+	"""
+	Trim something like a docstring to remove the whitespace that
+	is common due to indentation and formatting.
+	"""
+	return dedent(s).strip()
+
+class Splitter(object):
+	"""object that will split a string with the given arguments for each call
+	>>> s = Splitter(',')
+	>>> s('hello, world, this is your, master calling')
+	['hello', ' world', ' this is your', ' master calling']
+	"""
+	def __init__(self, *args):
+		self.args = args
+
+	def __call__(self, s):
+		return s.split(*self.args)
