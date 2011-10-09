@@ -1,8 +1,10 @@
 from __future__ import absolute_import
+
 import re
 import inspect
 import itertools
 import functools
+
 from .functools import compose
 from .exceptions import throws_exception
 
@@ -17,7 +19,7 @@ def multi_substitution(*substitutions):
 	"""
 	Take a sequence of pairs specifying substitutions, and create
 	a function that performs those substitutions.
-	
+
 	>>> multi_substitution(('foo', 'bar'), ('bar', 'baz'))('foo')
 	'baz'
 	"""
@@ -72,7 +74,7 @@ class FoldedCase(str):
 def local_format(string):
 	"""
 	format the string using variables in the caller's local namespace.
-	
+
 	>>> a = 3
 	>>> local_format("{a:5}")
 	'    3'
@@ -86,7 +88,7 @@ def is_decodable(value):
 	"""
 	return not throws_exception(functools.partial(unicode, value),
 		UnicodeDecodeError)
-	
+
 def is_binary(value):
 	"""
 	Return True if the value appears to be binary (that is, it's a byte
