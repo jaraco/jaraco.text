@@ -1,4 +1,4 @@
-from __future__ import absolute_import
+from __future__ import absolute_import, unicode_literals
 
 import re
 import inspect
@@ -21,7 +21,7 @@ def multi_substitution(*substitutions):
 	a function that performs those substitutions.
 
 	>>> multi_substitution(('foo', 'bar'), ('bar', 'baz'))('foo')
-	'baz'
+	u'baz'
 	"""
 	substitutions = itertools.starmap(substitution, substitutions)
 	# compose function applies last function first, so reverse the
@@ -29,7 +29,7 @@ def multi_substitution(*substitutions):
 	substitutions = reversed(tuple(substitutions))
 	return compose(*substitutions)
 
-class FoldedCase(str):
+class FoldedCase(unicode):
 	"""
 	A case insensitive string class; behaves just like str
 	except compares equal when the only variation is case.
@@ -45,10 +45,10 @@ class FoldedCase(str):
 	4
 
 	>>> s.split('O')
-	['hell', ' w', 'rld']
+	[u'hell', u' w', u'rld']
 
 	>>> sorted(map(FoldedCase, ['GAMMA', 'alpha', 'Beta']))
-	['alpha', 'Beta', 'GAMMA']
+	[u'alpha', u'Beta', u'GAMMA']
 	"""
 	def __lt__(self, other):
 		return self.lower() < other.lower()
@@ -77,7 +77,7 @@ def local_format(string):
 
 	>>> a = 3
 	>>> local_format("{a:5}")
-	'    3'
+	u'    3'
 	"""
 	return string.format(**inspect.currentframe().f_back.f_locals)
 
@@ -107,7 +107,7 @@ class Splitter(object):
 	"""object that will split a string with the given arguments for each call
 	>>> s = Splitter(',')
 	>>> s('hello, world, this is your, master calling')
-	['hello', ' world', ' this is your', ' master calling']
+	[u'hello', u' world', u' this is your', u' master calling']
 	"""
 	def __init__(self, *args):
 		self.args = args
