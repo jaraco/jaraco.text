@@ -5,6 +5,7 @@ import re
 import inspect
 import itertools
 import functools
+import textwrap
 
 from .functools import compose
 from .exceptions import throws_exception
@@ -130,11 +131,14 @@ def is_binary(value):
 	return isinstance(value, bytes) and not is_decodable(value)
 
 def trim(s):
-	"""
+	r"""
 	Trim something like a docstring to remove the whitespace that
 	is common due to indentation and formatting.
+
+	>>> trim("\n\tfoo = bar\n\t\tbar = baz\n")
+	'foo = bar\n\tbar = baz'
 	"""
-	return dedent(s).strip()
+	return textwrap.dedent(s).strip()
 
 class Splitter(object):
 	"""object that will split a string with the given arguments for each call
