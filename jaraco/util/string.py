@@ -136,7 +136,7 @@ def trim(s):
 	is common due to indentation and formatting.
 
 	>>> trim("\n\tfoo = bar\n\t\tbar = baz\n")
-	'foo = bar\n\tbar = baz'
+	u'foo = bar\n\tbar = baz'
 	"""
 	return textwrap.dedent(s).strip()
 
