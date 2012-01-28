@@ -55,12 +55,16 @@ class FoldedCase(unicode):
 	"""
 	def __lt__(self, other):
 		return self.lower() < other.lower()
+
 	def __gt__(self, other):
 		return self.lower() > other.lower()
+
 	def __eq__(self, other):
 		return self.lower() == other.lower()
+
 	def __hash__(self):
 		return hash(self.lower())
+
 	# cache lower since it's likely to be called frequently.
 	def lower(self):
 		self._lower = super(FoldedCase, self).lower()
@@ -83,7 +87,7 @@ def local_format(string):
 	u'    3'
 	"""
 	context = inspect.currentframe().f_back.f_locals
-	if sys.version_info < (3,2):
+	if sys.version_info < (3, 2):
 		return string.format(**context)
 	return string.format_map(context)
 
@@ -96,7 +100,7 @@ def global_format(string):
 	u'The func name: global_format'
 	"""
 	context = inspect.currentframe().f_back.f_globals
-	if sys.version_info < (3,2):
+	if sys.version_info < (3, 2):
 		return string.format(**context)
 	return string.format_map(context)
 
@@ -111,7 +115,7 @@ def namespace_format(string):
 	context = jaraco.util.dictlib.DictStack()
 	context.push(inspect.currentframe().f_back.f_globals)
 	context.push(inspect.currentframe().f_back.f_locals)
-	if sys.version_info < (3,2):
+	if sys.version_info < (3, 2):
 		return string.format(**context)
 	return string.format_map(context)
 
