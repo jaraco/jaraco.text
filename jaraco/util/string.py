@@ -155,3 +155,6 @@ class Splitter(object):
 
 	def __call__(self, s):
 		return s.split(*self.args)
+
+def indent(string, prefix=' ' * 4):
+	return prefix + string
