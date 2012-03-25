@@ -158,3 +158,59 @@ class Splitter(object):
 
 def indent(string, prefix=' ' * 4):
 	return prefix + string
+
+class WordSet(tuple):
+	def capitalized(self):
+		return WordSet(word.capitalize() for word in self)
+
+	def lowered(self):
+		return WordSet(word.lower() for word in self)
+
+	def camel_case(self):
+		return ''.join(self.capitalized())
+
+	def headless_camel_case(self):
+		words = iter(self)
+		first = next(words).lower()
+		return itertools.chain((first,), WordSet(words).camel_case())
+
+	def underscore_separated(self):
+		return '_'.join(self)
+
+	def dash_separated(self):
+		return '-'.join(self)
+
+def words(identifier):
+	"""
+	Given a Python identifier, return the words that identifier represents,
+	whether in camel case, underscore-separated, etc.
+
+	>>> words("camelCase")
+	(u'camel', u'Case')
+
+	>>> words("under_sep")
+	(u'under', u'sep')
+
+	Acronyms should be retained
+	>>> words("firstSNL")
+	(u'first', u'SNL')
+
+	>>> words("you_and_I")
+	(u'you', u'and', u'I')
+
+	>>> words("A simple test")
+	(u'A', u'simple', u'test')
+
+	Multiple caps should not interfere with the first cap of another word.
+	>>> words("myABCClass")
+	(u'my', u'ABC', u'Class')
+
+	The result is a WordSet, so you can get the form you need.
+	>>> words("myABCClass").underscore_separated()
+	u'my_ABC_Class'
+
+	>>> words('a-command').camel_case()
+	u'ACommand'
+	"""
+	pattern = re.compile('([A-Z]?[a-z]+)|([A-Z]+(?![a-z]))')
+	return WordSet(match.group(0) for match in pattern.finditer(identifier))
