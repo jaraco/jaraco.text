@@ -7,6 +7,8 @@ import itertools
 import functools
 import textwrap
 
+from . import six
+
 from .functools import compose
 from .exceptions import throws_exception
 import jaraco.util.dictlib
@@ -32,7 +34,7 @@ def multi_substitution(*substitutions):
 	substitutions = reversed(tuple(substitutions))
 	return compose(*substitutions)
 
-class FoldedCase(unicode):
+class FoldedCase(six.text_type):
 	"""
 	A case insensitive string class; behaves just like str
 	except compares equal when the only variation is case.
