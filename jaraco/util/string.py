@@ -26,7 +26,7 @@ def multi_substitution(*substitutions):
 	a function that performs those substitutions.
 
 	>>> multi_substitution(('foo', 'bar'), ('bar', 'baz'))('foo')
-	u'baz'
+	'baz'
 	"""
 	substitutions = itertools.starmap(substitution, substitutions)
 	# compose function applies last function first, so reverse the
@@ -50,10 +50,10 @@ class FoldedCase(six.text_type):
 	4
 
 	>>> s.split('O')
-	[u'hell', u' w', u'rld']
+	['hell', ' w', 'rld']
 
 	>>> sorted(map(FoldedCase, ['GAMMA', 'alpha', 'Beta']))
-	[u'alpha', u'Beta', u'GAMMA']
+	['alpha', 'Beta', 'GAMMA']
 	"""
 	def __lt__(self, other):
 		return self.lower() < other.lower()
@@ -86,7 +86,7 @@ def local_format(string):
 
 	>>> a = 3
 	>>> local_format("{a:5}")
-	u'    3'
+	'    3'
 	"""
 	context = inspect.currentframe().f_back.f_locals
 	if sys.version_info < (3, 2):
@@ -97,9 +97,14 @@ def global_format(string):
 	"""
 	format the string using variables in the caller's global namespace.
 
+	>>> import six
+
 	>>> a = 3
-	>>> global_format("The func name: {global_format.func_name}")
-	u'The func name: global_format'
+	>>> fmt = "The func name: {global_format.__name__}"
+	>>> if not six.PY3:
+	...     fmt.replace('__name__', 'func_name')
+	>>> global_format(fmt)
+	'The func name: global_format'
 	"""
 	context = inspect.currentframe().f_back.f_globals
 	if sys.version_info < (3, 2):
@@ -111,8 +116,11 @@ def namespace_format(string):
 	Format the string using variable in the caller's scope (locals + globals).
 
 	>>> a = 3
-	>>> namespace_format("A is {a} and this func is {namespace_format.func_name}")
-	u'A is 3 and this func is namespace_format'
+	>>> fmt = "A is {a} and this func is {namespace_format.__name__}"
+	>>> if not six.PY3:
+	...     fmt.replace('__name__', 'func_name')
+	>>> namespace_format(fmt)
+	'A is 3 and this func is namespace_format'
 	"""
 	context = jaraco.util.dictlib.DictStack()
 	context.push(inspect.currentframe().f_back.f_globals)
@@ -142,7 +150,7 @@ def trim(s):
 	is common due to indentation and formatting.
 
 	>>> trim("\n\tfoo = bar\n\t\tbar = baz\n")
-	u'foo = bar\n\tbar = baz'
+	'foo = bar\n\tbar = baz'
 	"""
 	return textwrap.dedent(s).strip()
 
@@ -150,7 +158,7 @@ class Splitter(object):
 	"""object that will split a string with the given arguments for each call
 	>>> s = Splitter(',')
 	>>> s('hello, world, this is your, master calling')
-	[u'hello', u' world', u' this is your', u' master calling']
+	['hello', ' world', ' this is your', ' master calling']
 	"""
 	def __init__(self, *args):
 		self.args = args
@@ -188,31 +196,31 @@ def words(identifier):
 	whether in camel case, underscore-separated, etc.
 
 	>>> words("camelCase")
-	(u'camel', u'Case')
+	('camel', 'Case')
 
 	>>> words("under_sep")
-	(u'under', u'sep')
+	('under', 'sep')
 
 	Acronyms should be retained
 	>>> words("firstSNL")
-	(u'first', u'SNL')
+	('first', 'SNL')
 
 	>>> words("you_and_I")
-	(u'you', u'and', u'I')
+	('you', 'and', 'I')
 
 	>>> words("A simple test")
-	(u'A', u'simple', u'test')
+	('A', 'simple', 'test')
 
 	Multiple caps should not interfere with the first cap of another word.
 	>>> words("myABCClass")
-	(u'my', u'ABC', u'Class')
+	('my', 'ABC', 'Class')
 
 	The result is a WordSet, so you can get the form you need.
 	>>> words("myABCClass").underscore_separated()
-	u'my_ABC_Class'
+	'my_ABC_Class'
 
 	>>> words('a-command').camel_case()
-	u'ACommand'
+	'ACommand'
 	"""
 	pattern = re.compile('([A-Z]?[a-z]+)|([A-Z]+(?![a-z]))')
 	return WordSet(match.group(0) for match in pattern.finditer(identifier))
