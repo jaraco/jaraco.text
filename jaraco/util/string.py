@@ -7,7 +7,7 @@ import itertools
 import functools
 import textwrap
 
-from . import six
+import six
 
 from .functools import compose
 from .exceptions import throws_exception
