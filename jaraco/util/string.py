@@ -130,12 +130,16 @@ def namespace_format(string):
 	return string.format_map(context)
 
 def is_decodable(value):
+	r"""
+	Return True if the supplied value is decodable (using the default
+	encoding).
+
+	>>> is_decodable(b'\xff')
+	False
+	>>> is_decodable(b'\x32')
+	True
 	"""
-	Return True if the supplied value is decodable (using the 'unicode'
-	constructor and thus the default encoding).
-	"""
-	return not throws_exception(functools.partial(unicode, value),
-		UnicodeDecodeError)
+	return not throws_exception(lambda: value.decode(), UnicodeDecodeError)
 
 def is_binary(value):
 	"""
