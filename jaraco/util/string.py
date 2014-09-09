@@ -225,6 +225,10 @@ def words(identifier):
 
 	>>> words('a-command').camel_case()
 	'ACommand'
+
+	Slices of the result should return another WordSet.
+	>>> words('taken-out-of-context')[1:].underscore_separated()
+	'out_of_context'
 	"""
 	pattern = re.compile('([A-Z]?[a-z]+)|([A-Z]+(?![a-z]))')
 	return WordSet(match.group(0) for match in pattern.finditer(identifier))
