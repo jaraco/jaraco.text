@@ -194,6 +194,13 @@ class WordSet(tuple):
 	def dash_separated(self):
 		return '-'.join(self)
 
+	def __getitem__(self, item):
+		result = super(WordSet, self).__getitem__(item)
+		if isinstance(item, slice):
+			result = WordSet(result)
+		return result
+
+
 def words(identifier):
 	"""
 	Given a Python identifier, return the words that identifier represents,
