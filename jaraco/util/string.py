@@ -174,6 +174,8 @@ def indent(string, prefix=' ' * 4):
 	return prefix + string
 
 class WordSet(tuple):
+	_pattern = re.compile('([A-Z]?[a-z]+)|([A-Z]+(?![a-z]))')
+
 	def capitalized(self):
 		return WordSet(word.capitalize() for word in self)
 
@@ -200,45 +202,49 @@ class WordSet(tuple):
 			result = WordSet(result)
 		return result
 
+	@classmethod
+	def parse(cls, identifier):
+		"""
+		Given a Python identifier, return the words that identifier represents,
+		whether in camel case, underscore-separated, etc.
 
-def words(identifier):
-	"""
-	Given a Python identifier, return the words that identifier represents,
-	whether in camel case, underscore-separated, etc.
+		>>> WordSet.parse("camelCase")
+		('camel', 'Case')
 
-	>>> words("camelCase")
-	('camel', 'Case')
+		>>> WordSet.parse("under_sep")
+		('under', 'sep')
 
-	>>> words("under_sep")
-	('under', 'sep')
+		Acronyms should be retained
+		>>> WordSet.parse("firstSNL")
+		('first', 'SNL')
 
-	Acronyms should be retained
-	>>> words("firstSNL")
-	('first', 'SNL')
+		>>> WordSet.parse("you_and_I")
+		('you', 'and', 'I')
 
-	>>> words("you_and_I")
-	('you', 'and', 'I')
+		>>> WordSet.parse("A simple test")
+		('A', 'simple', 'test')
 
-	>>> words("A simple test")
-	('A', 'simple', 'test')
+		Multiple caps should not interfere with the first cap of another word.
+		>>> WordSet.parse("myABCClass")
+		('my', 'ABC', 'Class')
 
-	Multiple caps should not interfere with the first cap of another word.
-	>>> words("myABCClass")
-	('my', 'ABC', 'Class')
+		The result is a WordSet, so you can get the form you need.
+		>>> WordSet.parse("myABCClass").underscore_separated()
+		'my_ABC_Class'
 
-	The result is a WordSet, so you can get the form you need.
-	>>> words("myABCClass").underscore_separated()
-	'my_ABC_Class'
+		>>> WordSet.parse('a-command').camel_case()
+		'ACommand'
 
-	>>> words('a-command').camel_case()
-	'ACommand'
+		Slices of the result should return another WordSet.
+		>>> WordSet.parse('taken-out-of-context')[1:].underscore_separated()
+		'out_of_context'
+		"""
+		matches = cls._pattern.finditer(identifier)
+		return WordSet(match.group(0) for match in matches)
 
-	Slices of the result should return another WordSet.
-	>>> words('taken-out-of-context')[1:].underscore_separated()
-	'out_of_context'
-	"""
-	pattern = re.compile('([A-Z]?[a-z]+)|([A-Z]+(?![a-z]))')
-	return WordSet(match.group(0) for match in pattern.finditer(identifier))
+
+# for backward compatibility
+words = WordSet.parse
 
 
 def simple_html_strip(s):
