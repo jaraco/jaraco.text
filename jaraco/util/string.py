@@ -235,6 +235,9 @@ class WordSet(tuple):
 	def dash_separated(self):
 		return '-'.join(self)
 
+	def space_separated(self):
+		return ' '.join(self)
+
 	def __getitem__(self, item):
 		result = super(WordSet, self).__getitem__(item)
 		if isinstance(item, slice):
@@ -246,6 +249,9 @@ class WordSet(tuple):
 		matches = cls._pattern.finditer(identifier)
 		return WordSet(match.group(0) for match in matches)
 
+	@classmethod
+	def from_class_name(cls, subject):
+		return cls.parse(subject.__class__.__name__)
 
 # for backward compatibility
 words = WordSet.parse
