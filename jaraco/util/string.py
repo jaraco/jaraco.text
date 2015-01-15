@@ -208,6 +208,9 @@ class WordSet(tuple):
 
 	>>> WordSet.parse('taken-out-of-context')[1:].underscore_separated()
 	'out_of_context'
+
+	>>> WordSet.from_class_name(WordSet()).lowered().space_separated()
+	'word set'
 	"""
 	_pattern = re.compile('([A-Z]?[a-z]+)|([A-Z]+(?![a-z]))')
 
