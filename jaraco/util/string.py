@@ -96,12 +96,8 @@ def global_format(string):
 	"""
 	format the string using variables in the caller's global namespace.
 
-	>>> import six
-
 	>>> a = 3
 	>>> fmt = "The func name: {global_format.__name__}"
-	>>> if not six.PY3:
-	...     fmt.replace('__name__', 'func_name')
 	>>> global_format(fmt)
 	'The func name: global_format'
 	"""
@@ -116,8 +112,6 @@ def namespace_format(string):
 
 	>>> a = 3
 	>>> fmt = "A is {a} and this func is {namespace_format.__name__}"
-	>>> if not six.PY3:
-	...     fmt.replace('__name__', 'func_name')
 	>>> namespace_format(fmt)
 	'A is 3 and this func is namespace_format'
 	"""
