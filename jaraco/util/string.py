@@ -4,7 +4,6 @@ import sys
 import re
 import inspect
 import itertools
-import functools
 import textwrap
 
 import six
