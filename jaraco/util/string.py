@@ -201,6 +201,9 @@ class WordSet(tuple):
 	>>> WordSet.parse('a-command').camel_case()
 	'ACommand'
 
+	>>> WordSet.parse('someIdentifier').lowered().space_separated()
+	'some identifier'
+
 	Slices of the result should return another WordSet.
 
 	>>> WordSet.parse('taken-out-of-context')[1:].underscore_separated()
