@@ -7,8 +7,8 @@ import itertools
 import textwrap
 
 import six
+from jaraco.functools import compose
 
-from .functools import compose
 from .exceptions import throws_exception
 import jaraco.util.dictlib
 
