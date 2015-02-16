@@ -8,8 +8,8 @@ import textwrap
 
 import six
 from jaraco.functools import compose
+from jaraco.context import ExceptionTrap
 
-from .context import ExceptionTrap
 import jaraco.util.dictlib
 
 
