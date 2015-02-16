@@ -19,6 +19,7 @@ def substitution(old, new):
 	"""
 	return lambda s: s.replace(old, new)
 
+
 def multi_substitution(*substitutions):
 	"""
 	Take a sequence of pairs specifying substitutions, and create
@@ -32,6 +33,7 @@ def multi_substitution(*substitutions):
 	#  substitutions to get the expected order.
 	substitutions = reversed(tuple(substitutions))
 	return compose(*substitutions)
+
 
 class FoldedCase(six.text_type):
 	"""
@@ -79,6 +81,7 @@ class FoldedCase(six.text_type):
 		pattern = re.compile(re.escape(splitter), re.I)
 		return pattern.split(self, maxsplit)
 
+
 def local_format(string):
 	"""
 	format the string using variables in the caller's local namespace.
@@ -91,6 +94,7 @@ def local_format(string):
 	if sys.version_info < (3, 2):
 		return string.format(**context)
 	return string.format_map(context)
+
 
 def global_format(string):
 	"""
@@ -105,6 +109,7 @@ def global_format(string):
 	if sys.version_info < (3, 2):
 		return string.format(**context)
 	return string.format_map(context)
+
 
 def namespace_format(string):
 	"""
@@ -121,6 +126,7 @@ def namespace_format(string):
 	if sys.version_info < (3, 2):
 		return string.format(**context)
 	return string.format_map(context)
+
 
 def is_decodable(value):
 	r"""
