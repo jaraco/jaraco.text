@@ -1,0 +1,4 @@
+1.0
+===
+
+Initial implementation adopted from jaraco.util.string 10.8.
