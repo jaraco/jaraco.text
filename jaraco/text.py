@@ -7,10 +7,9 @@ import itertools
 import textwrap
 
 import six
+import jaraco.collections
 from jaraco.functools import compose
 from jaraco.context import ExceptionTrap
-
-import jaraco.util.dictlib
 
 
 def substitution(old, new):
@@ -120,7 +119,7 @@ def namespace_format(string):
 	>>> namespace_format(fmt)
 	'A is 3 and this func is namespace_format'
 	"""
-	context = jaraco.util.dictlib.DictStack()
+	context = jaraco.collections.DictStack()
 	context.push(inspect.currentframe().f_back.f_globals)
 	context.push(inspect.currentframe().f_back.f_locals)
 	if sys.version_info < (3, 2):
