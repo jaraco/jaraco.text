@@ -9,7 +9,7 @@ import textwrap
 import six
 from jaraco.functools import compose
 
-from .exceptions import throws_exception
+from .context import ExceptionTrap
 import jaraco.util.dictlib
 
 
@@ -132,7 +132,9 @@ def is_decodable(value):
 	>>> is_decodable(b'\x32')
 	True
 	"""
-	return not throws_exception(lambda: value.decode(), UnicodeDecodeError)
+	with ExceptionTrap(UnicodeDecodeError) as error:
+		value.decode()
+	return not bool(error)
 
 def is_binary(value):
 	"""
