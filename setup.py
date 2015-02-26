@@ -26,7 +26,7 @@ setup_params = dict(
 	packages=setuptools.find_packages(),
 	install_requires=[
 		'jaraco.functools',
-		'jaraco.context',
+		'jaraco.context>=1.3',
 		'jaraco.collections',
 	],
 	setup_requires=[
