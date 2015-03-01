@@ -1,3 +1,8 @@
+1.3
+===
+
+Add SeparatedValues class.
+
 1.0
 ===
 
