@@ -5,8 +5,10 @@ import re
 import inspect
 import itertools
 import textwrap
+import functools
 
 import six
+
 import jaraco.collections
 from jaraco.functools import compose
 from jaraco.context import ExceptionTrap
@@ -307,3 +309,42 @@ class SeparatedValues(six.text_type):
 	def __iter__(self):
 		parts = self.split(self.separator)
 		return six.moves.filter(None, (part.strip() for part in parts))
+
+class Stripper:
+	r"""
+	Given a series of lines, find the common prefix and strip it from them.
+
+	>>> lines = [
+	...     'abcdefg\n',
+	...     'abc\n',
+	...     'abcde\n',
+	... ]
+	>>> res = Stripper.strip_prefix(lines)
+	>>> res.prefix
+	'abc'
+	>>> list(res.lines)
+	['defg\n', '\n', 'de\n']
+	"""
+	def __init__(self, prefix, lines):
+		self.prefix = prefix
+		self.lines = map(self, lines)
+
+	@classmethod
+	def strip_prefix(cls, lines):
+		prefix_lines, lines = itertools.tee(lines)
+		prefix = functools.reduce(cls.common_prefix, prefix_lines)
+		return cls(prefix, lines)
+
+	def __call__(self, line):
+		null, prefix, rest = line.partition(self.prefix)
+		return rest
+
+	@staticmethod
+	def common_prefix(s1, s2):
+		"""
+		Return the common prefix of two lines.
+		"""
+		index = min(len(s1), len(s2))
+		while s1[:index] != s2[:index]:
+			index -= 1
+		return s1[:index]
