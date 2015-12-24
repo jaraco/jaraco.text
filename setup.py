@@ -24,7 +24,7 @@ setup_params = dict(
 	long_description=long_description,
 	url="https://bitbucket.org/jaraco/jaraco.text",
 	packages=setuptools.find_packages(),
-        namespace_packages=['jaraco'],
+	namespace_packages=['jaraco'],
 	install_requires=[
 		'jaraco.functools',
 		'jaraco.context>=1.3',
