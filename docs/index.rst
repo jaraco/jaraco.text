@@ -1,7 +1,13 @@
-Welcome to jaraco.text documentation!
+Welcome to skeleton documentation!
 ========================================
 
-.. automodule:: jaraco.text
+.. toctree::
+   :maxdepth: 1
+
+   history
+
+
+.. automodule:: skeleton
     :members:
     :undoc-members:
     :show-inheritance:
