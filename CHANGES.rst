@@ -1,3 +1,10 @@
+1.5
+===
+
+Move hosting to github.
+
+Add missing namespace package declaration in distribution.
+
 1.4
 ===
 
