@@ -1,3 +1,8 @@
+1.6
+===
+
+Drop dependency on jaraco.context (and its dependencies).
+
 1.5
 ===
 

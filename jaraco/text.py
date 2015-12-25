@@ -11,7 +11,6 @@ import six
 
 import jaraco.collections
 from jaraco.functools import compose
-from jaraco.context import ExceptionTrap
 
 
 def substitution(old, new):
@@ -139,9 +138,14 @@ def is_decodable(value):
 	>>> is_decodable(b'\x32')
 	True
 	"""
-	with ExceptionTrap(UnicodeDecodeError) as error:
+	# TODO: This code could be expressed more consisely and directly
+	# with a jaraco.context.ExceptionTrap, but that adds an unfortunate
+	# long dependency tree, so for now, use boolean literals.
+	try:
 		value.decode()
-	return not bool(error)
+	except UnicodeDecodeError:
+		return False
+	return True
 
 def is_binary(value):
 	"""

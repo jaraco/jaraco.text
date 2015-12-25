@@ -30,7 +30,6 @@ setup_params = dict(
 	namespace_packages=['jaraco'],
 	install_requires=[
 		'jaraco.functools',
-		'jaraco.context>=1.3',
 		'jaraco.collections',
 	],
 	extras_require={
