@@ -1,3 +1,8 @@
+1.6.2
+=====
+
+Issue #1: Fix WordSet on Python 2.
+
 1.6
 ===
 
