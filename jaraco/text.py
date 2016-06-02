@@ -332,6 +332,17 @@ class Stripper:
 	'abc'
 	>>> list(res.lines)
 	['defg\n', '\n', 'de\n']
+
+	If no prefix is common, nothing should be stripped.
+
+	>>> lines = [
+	...     'abcd\n',
+	...     '1234\n',
+	... ]
+	>>> res = Stripper.strip_prefix(lines)
+	>>> res.prefix = ''
+	>>> list(res.lines)
+	['abcd\n', '1234\n']
 	"""
 	def __init__(self, prefix, lines):
 		self.prefix = prefix
@@ -344,6 +355,8 @@ class Stripper:
 		return cls(prefix, lines)
 
 	def __call__(self, line):
+		if not self.prefix:
+			return line
 		null, prefix, rest = line.partition(self.prefix)
 		return rest
 

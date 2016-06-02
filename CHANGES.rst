@@ -1,3 +1,8 @@
+1.7
+===
+
+In Stripper, always strip the prefix, even if it's empty.
+
 1.6.2
 =====
 
