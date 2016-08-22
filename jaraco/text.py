@@ -369,3 +369,31 @@ class Stripper:
 		while s1[:index] != s2[:index]:
 			index -= 1
 		return s1[:index]
+
+
+def remove_prefix(text, prefix):
+	"""
+	Remove the prefix from the text if it exists.
+
+	>>> remove_prefix('underwhelming performance', 'underwhelming ')
+	'performance'
+
+	>>> remove_prefix('something special', 'sample')
+	'something special'
+	"""
+	null, prefix, rest = text.rpartition(prefix)
+	return rest
+
+
+def remove_suffix(text, suffix):
+	"""
+	Remove the suffix from the text if it exists.
+
+	>>> remove_suffix('name.git', '.git')
+	'name'
+
+	>>> remove_suffix('something special', 'sample')
+	'something special'
+	"""
+	rest, suffix, null = text.partition(suffix)
+	return rest

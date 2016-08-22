@@ -1,3 +1,8 @@
+1.8
+===
+
+Add remove_prefix and remove_suffix helpers.
+
 1.7
 ===
 
