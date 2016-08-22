@@ -39,6 +39,7 @@ class FoldedCase(six.text_type):
 	"""
 	A case insensitive string class; behaves just like str
 	except compares equal when the only variation is case.
+
 	>>> s = FoldedCase('hello world')
 
 	>>> s == 'Hello World'
@@ -166,6 +167,7 @@ def trim(s):
 
 class Splitter(object):
 	"""object that will split a string with the given arguments for each call
+
 	>>> s = Splitter(',')
 	>>> s('hello, world, this is your, master calling')
 	['hello', ' world', ' this is your', ' master calling']
