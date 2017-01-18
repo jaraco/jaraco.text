@@ -1,3 +1,12 @@
+1.9
+===
+
+Synchronize with skeleton.
+
+Update docs and expand tests on FoldedCase.
+
+Use method_cache for ``FoldedCase.lower``.
+
 1.8
 ===
 
