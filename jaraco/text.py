@@ -56,6 +56,14 @@ class FoldedCase(six.text_type):
 
 	>>> sorted(map(FoldedCase, ['GAMMA', 'alpha', 'Beta']))
 	['alpha', 'Beta', 'GAMMA']
+
+	You may test for set inclusion, but candidate and elements
+	must both be folded.
+
+	>>> FoldedCase("Hello World") in {s}
+	True
+	>>> s in {FoldedCase("Hello World")}
+	True
 	"""
 	def __lt__(self, other):
 		return self.lower() < other.lower()
