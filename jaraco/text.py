@@ -57,6 +57,13 @@ class FoldedCase(six.text_type):
 	>>> sorted(map(FoldedCase, ['GAMMA', 'alpha', 'Beta']))
 	['alpha', 'Beta', 'GAMMA']
 
+	Sequence membership is straightforward.
+
+	>>> "Hello World" in [s]
+	True
+	>>> s in ["Hello World"]
+	True
+
 	You may test for set inclusion, but candidate and elements
 	must both be folded.
 
