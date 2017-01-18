@@ -85,10 +85,9 @@ class FoldedCase(six.text_type):
 		return hash(self.lower())
 
 	# cache lower since it's likely to be called frequently.
+	@jaraco.functools.method_cache
 	def lower(self):
-		self._lower = super(FoldedCase, self).lower()
-		self.lower = lambda: self._lower
-		return self._lower
+		return super(FoldedCase, self).lower()
 
 	def index(self, sub):
 		return self.lower().index(sub.lower())
