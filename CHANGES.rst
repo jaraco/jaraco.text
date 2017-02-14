@@ -1,3 +1,8 @@
+1.9.2
+=====
+
+Fix bug where ``FoldedCase.__ne__`` was case-sensitive.
+
 1.9.1
 =====
 

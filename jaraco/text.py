@@ -48,6 +48,9 @@ class FoldedCase(six.text_type):
 	>>> 'Hello World' == s
 	True
 
+	>>> s != 'Hello World'
+	False
+
 	>>> s.index('O')
 	4
 
@@ -80,6 +83,9 @@ class FoldedCase(six.text_type):
 
 	def __eq__(self, other):
 		return self.lower() == other.lower()
+
+	def __ne__(self, other):
+		return self.lower() != other.lower()
 
 	def __hash__(self):
 		return hash(self.lower())
