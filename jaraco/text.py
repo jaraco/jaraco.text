@@ -168,12 +168,14 @@ def is_decodable(value):
 		return False
 	return True
 
+
 def is_binary(value):
 	"""
 	Return True if the value appears to be binary (that is, it's a byte
 	string and isn't decodable).
 	"""
 	return isinstance(value, bytes) and not is_decodable(value)
+
 
 def trim(s):
 	r"""
@@ -184,6 +186,7 @@ def trim(s):
 	'foo = bar\n\tbar = baz'
 	"""
 	return textwrap.dedent(s).strip()
+
 
 class Splitter(object):
 	"""object that will split a string with the given arguments for each call
@@ -198,8 +201,10 @@ class Splitter(object):
 	def __call__(self, s):
 		return s.split(*self.args)
 
+
 def indent(string, prefix=' ' * 4):
 	return prefix + string
+
 
 class WordSet(tuple):
 	"""
@@ -291,6 +296,7 @@ class WordSet(tuple):
 	def from_class_name(cls, subject):
 		return cls.parse(subject.__class__.__name__)
 
+
 # for backward compatibility
 words = WordSet.parse
 
@@ -339,6 +345,7 @@ class SeparatedValues(six.text_type):
 	def __iter__(self):
 		parts = self.split(self.separator)
 		return six.moves.filter(None, (part.strip() for part in parts))
+
 
 class Stripper:
 	r"""
