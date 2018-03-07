@@ -3,15 +3,11 @@
 
 .. image:: https://img.shields.io/pypi/pyversions/jaraco.text.svg
 
-.. image:: https://img.shields.io/pypi/dm/jaraco.text.svg
-
 .. image:: https://img.shields.io/travis/jaraco/jaraco.text/master.svg
-   :target: http://travis-ci.org/jaraco/jaraco.text
+   :target: https://travis-ci.org/jaraco/jaraco.text
 
+.. .. image:: https://img.shields.io/appveyor/ci/jaraco/skeleton/master.svg
+..    :target: https://ci.appveyor.com/project/jaraco/skeleton/branch/master
 
-License
-=======
-
-License is indicated in the project metadata (typically one or more
-of the Trove classifiers). For more details, see `this explanation
-<https://github.com/jaraco/skeleton/issues/1>`_.
+.. .. image:: https://readthedocs.org/projects/skeleton/badge/?version=latest
+..    :target: https://skeleton.readthedocs.io/en/latest/?badge=latest
