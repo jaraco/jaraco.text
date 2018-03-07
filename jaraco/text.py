@@ -74,6 +74,23 @@ class FoldedCase(six.text_type):
 	True
 	>>> s in {FoldedCase("Hello World")}
 	True
+
+	String inclusion works as long as the FoldedCase object
+	is on the right.
+
+	>>> "hello" in FoldedCase("Hello World")
+	True
+
+	But not if the FoldedCase object is on the left:
+
+	>>> FoldedCase('hello') in 'Hello World'
+	False
+
+	In that case, use in_:
+
+	>>> FoldedCase('hello').in_('Hello World')
+	True
+
 	"""
 	def __lt__(self, other):
 		return self.lower() < other.lower()
@@ -89,6 +106,13 @@ class FoldedCase(six.text_type):
 
 	def __hash__(self):
 		return hash(self.lower())
+
+	def __contains__(self, other):
+		return super(FoldedCase, self).lower().__contains__(other.lower())
+
+	def in_(self, other):
+		"Does self appear in other?"
+		return self in FoldedCase(other)
 
 	# cache lower since it's likely to be called frequently.
 	@jaraco.functools.method_cache

@@ -1,3 +1,9 @@
+1.10
+====
+
+FoldedCase now supports string-containment support in an
+unfortunately assymetric way.
+
 1.9.2
 =====
 
