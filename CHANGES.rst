@@ -1,3 +1,8 @@
+1.10.1
+======
+
+Packaging refresh. Docs now published in RTD.
+
 1.10
 ====
 
