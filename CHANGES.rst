@@ -1,3 +1,16 @@
+3.0
+===
+
+Removed ``local_format``, ``global_format``, and
+``namespace_format``. Instead, developers should
+use `f-strings
+<https://docs.python.org/3.6/reference/lexical_analysis.html#f-strings>`_
+on Python 3.6 and later or `future-fstrings
+<https://pypi.org/project/future-fstrings>`_ for compatibilty
+with older Pythons. This change eliminates the dependency on
+jaraco.collections and thus for now removes the circular dependency
+as reported in #3.
+
 2.0
 ===
 

@@ -1,16 +1,13 @@
 from __future__ import absolute_import, unicode_literals, print_function
 
-import sys
 import re
-import inspect
 import itertools
 import textwrap
 import functools
 
 import six
 
-import jaraco.collections
-from jaraco.functools import compose
+from jaraco.functools import compose, method_cache
 
 
 def substitution(old, new):
@@ -115,7 +112,7 @@ class FoldedCase(six.text_type):
 		return self in FoldedCase(other)
 
 	# cache lower since it's likely to be called frequently.
-	@jaraco.functools.method_cache
+	@method_cache
 	def lower(self):
 		return super(FoldedCase, self).lower()
 
@@ -125,52 +122,6 @@ class FoldedCase(six.text_type):
 	def split(self, splitter=' ', maxsplit=0):
 		pattern = re.compile(re.escape(splitter), re.I)
 		return pattern.split(self, maxsplit)
-
-
-def local_format(string):
-	"""
-	format the string using variables in the caller's local namespace.
-
-	>>> a = 3
-	>>> local_format("{a:5}")
-	'    3'
-	"""
-	context = inspect.currentframe().f_back.f_locals
-	if sys.version_info < (3, 2):
-		return string.format(**context)
-	return string.format_map(context)
-
-
-def global_format(string):
-	"""
-	format the string using variables in the caller's global namespace.
-
-	>>> a = 3
-	>>> fmt = "The func name: {global_format.__name__}"
-	>>> global_format(fmt)
-	'The func name: global_format'
-	"""
-	context = inspect.currentframe().f_back.f_globals
-	if sys.version_info < (3, 2):
-		return string.format(**context)
-	return string.format_map(context)
-
-
-def namespace_format(string):
-	"""
-	Format the string using variable in the caller's scope (locals + globals).
-
-	>>> a = 3
-	>>> fmt = "A is {a} and this func is {namespace_format.__name__}"
-	>>> namespace_format(fmt)
-	'A is 3 and this func is namespace_format'
-	"""
-	context = jaraco.collections.DictStack()
-	context.push(inspect.currentframe().f_back.f_globals)
-	context.push(inspect.currentframe().f_back.f_locals)
-	if sys.version_info < (3, 2):
-		return string.format(**context)
-	return string.format_map(context)
 
 
 def is_decodable(value):
