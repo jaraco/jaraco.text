@@ -88,6 +88,8 @@ class FoldedCase(six.text_type):
     >>> FoldedCase('hello').in_('Hello World')
     True
 
+    >>> FoldedCase('hello') > FoldedCase('Hello')
+    False
     """
 
     def __lt__(self, other):
@@ -146,9 +148,14 @@ def is_decodable(value):
 
 
 def is_binary(value):
-    """
+    r"""
     Return True if the value appears to be binary (that is, it's a byte
     string and isn't decodable).
+
+    >>> is_binary(b'\xff')
+    True
+    >>> is_binary('\xff')
+    False
     """
     return isinstance(value, bytes) and not is_decodable(value)
 
@@ -180,6 +187,10 @@ class Splitter(object):
 
 
 def indent(string, prefix=' ' * 4):
+    """
+    >>> indent('foo')
+    '    foo'
+    """
     return prefix + string
 
 
@@ -228,6 +239,13 @@ class WordSet(tuple):
 
     >>> WordSet.from_class_name(WordSet()).lowered().space_separated()
     'word set'
+
+    >>> example = WordSet.parse('figured it out')
+    >>> example.headless_camel_case()
+    'figuredItOut'
+    >>> example.dash_separated()
+    'figured-it-out'
+
     """
 
     _pattern = re.compile('([A-Z]?[a-z]+)|([A-Z]+(?![a-z]))')
@@ -244,7 +262,8 @@ class WordSet(tuple):
     def headless_camel_case(self):
         words = iter(self)
         first = next(words).lower()
-        return itertools.chain((first,), WordSet(words).camel_case())
+        new_words = itertools.chain((first,), WordSet(words).camel_case())
+        return ''.join(new_words)
 
     def underscore_separated(self):
         return '_'.join(self)
@@ -262,7 +281,7 @@ class WordSet(tuple):
         return result
 
     # for compatibility with Python 2
-    def __getslice__(self, i, j):
+    def __getslice__(self, i, j):  # pragma: nocover
         return self.__getitem__(slice(i, j))
 
     @classmethod
