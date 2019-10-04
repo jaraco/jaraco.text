@@ -1,3 +1,8 @@
+3.0.1
+=====
+
+Declare missing dependency on six.
+
 3.0
 ===
 
