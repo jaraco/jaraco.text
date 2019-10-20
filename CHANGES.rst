@@ -1,3 +1,9 @@
+3.1
+===
+
+Added ``wrap`` and ``unwrap`` functions and ``lorem_ipsum``
+attribute containing the Lorem Ipsum sample text.
+
 3.0.1
 =====
 
