@@ -7,6 +7,11 @@ import functools
 
 import six
 
+try:
+    from importlib import resources
+except ImportError:
+    import importlib_resources as resources
+
 from jaraco.functools import compose, method_cache
 
 
@@ -169,6 +174,62 @@ def trim(s):
     'foo = bar\n\tbar = baz'
     """
     return textwrap.dedent(s).strip()
+
+
+def wrap(s):
+    """
+    Wrap lines of text, retaining existing newlines as
+    paragraph markers.
+
+    >>> print(wrap(lorem_ipsum))
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+    minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+    aliquip ex ea commodo consequat. Duis aute irure dolor in
+    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+    culpa qui officia deserunt mollit anim id est laborum.
+    <BLANKLINE>
+    Curabitur pretium tincidunt lacus. Nulla gravida orci a odio. Nullam
+    varius, turpis et commodo pharetra, est eros bibendum elit, nec luctus
+    magna felis sollicitudin mauris. Integer in mauris eu nibh euismod
+    gravida. Duis ac tellus et risus vulputate vehicula. Donec lobortis
+    risus a elit. Etiam tempor. Ut ullamcorper, ligula eu tempor congue,
+    eros est euismod turpis, id tincidunt sapien risus a quam. Maecenas
+    fermentum consequat mi. Donec fermentum. Pellentesque malesuada nulla
+    a mi. Duis sapien sem, aliquet nec, commodo eget, consequat quis,
+    neque. Aliquam faucibus, elit ut dictum aliquet, felis nisl adipiscing
+    sapien, sed malesuada diam lacus eget erat. Cras mollis scelerisque
+    nunc. Nullam arcu. Aliquam consequat. Curabitur augue lorem, dapibus
+    quis, laoreet et, pretium ac, nisi. Aenean magna nisl, mollis quis,
+    molestie eu, feugiat in, orci. In hac habitasse platea dictumst.
+    """
+    paragraphs = s.splitlines()
+    wrapped = ('\n'.join(textwrap.wrap(para)) for para in paragraphs)
+    return '\n\n'.join(wrapped)
+
+
+def unwrap(s):
+    r"""
+    Given a multi-line string, return an unwrapped version.
+
+    >>> wrapped = wrap(lorem_ipsum)
+    >>> wrapped.count('\n')
+    20
+    >>> unwrapped = unwrap(wrapped)
+    >>> unwrapped.count('\n')
+    1
+    >>> print(unwrapped)
+    Lorem ipsum dolor sit amet, consectetur adipiscing ...
+    Curabitur pretium tincidunt lacus. Nulla gravida orci ...
+
+    """
+    paragraphs = re.split(r'\n\n+', s)
+    cleaned = (para.replace('\n', ' ') for para in paragraphs)
+    return '\n'.join(cleaned)
+
+
+lorem_ipsum = resources.read_text(__name__, 'Lorem ipsum.txt')
 
 
 class Splitter(object):
