@@ -1,3 +1,8 @@
+v3.2.0
+======
+
+Added normalize_newlines function.
+
 3.1
 ===
 
