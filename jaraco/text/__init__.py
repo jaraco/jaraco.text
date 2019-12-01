@@ -9,7 +9,7 @@ import six
 
 try:
     from importlib import resources
-except ImportError:
+except ImportError:  # pragma: nocover
     import importlib_resources as resources
 
 from jaraco.functools import compose, method_cache
@@ -482,3 +482,19 @@ def remove_suffix(text, suffix):
     """
     rest, suffix, null = text.partition(suffix)
     return rest
+
+
+def normalize_newlines(text):
+    r"""
+    Replace alternate newlines with the canonical newline.
+
+    >>> normalize_newlines('Lorem Ipsum\u2029')
+    'Lorem Ipsum\n'
+    >>> normalize_newlines('Lorem Ipsum\r\n')
+    'Lorem Ipsum\n'
+    >>> normalize_newlines('Lorem Ipsum\x85')
+    'Lorem Ipsum\n'
+    """
+    newlines = ['\r\n', '\r', '\n', '\u0085', '\u2028', '\u2029']
+    pattern = '|'.join(newlines)
+    return re.sub(pattern, '\n', text)
