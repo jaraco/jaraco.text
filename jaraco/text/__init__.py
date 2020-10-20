@@ -1,11 +1,7 @@
-from __future__ import absolute_import, unicode_literals, print_function
-
 import re
 import itertools
 import textwrap
 import functools
-
-import six
 
 try:
     from importlib import resources  # type: ignore
@@ -37,7 +33,7 @@ def multi_substitution(*substitutions):
     return compose(*substitutions)
 
 
-class FoldedCase(six.text_type):
+class FoldedCase(str):
     """
     A case insensitive string class; behaves just like str
     except compares equal when the only variation is case.
@@ -381,7 +377,7 @@ def simple_html_strip(s):
     return ''.join(texts)
 
 
-class SeparatedValues(six.text_type):
+class SeparatedValues(str):
     """
     A string separated by a separator. Overrides __iter__ for getting
     the values.
@@ -399,7 +395,7 @@ class SeparatedValues(six.text_type):
 
     def __iter__(self):
         parts = self.split(self.separator)
-        return six.moves.filter(None, (part.strip() for part in parts))
+        return filter(None, (part.strip() for part in parts))
 
 
 class Stripper:
