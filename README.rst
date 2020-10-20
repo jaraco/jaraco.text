@@ -1,7 +1,13 @@
 .. image:: https://img.shields.io/pypi/v/jaraco.text.svg
-   :target: https://pypi.org/project/jaraco.text
+   :target: `PyPI link`_
 
 .. image:: https://img.shields.io/pypi/pyversions/jaraco.text.svg
+   :target: `PyPI link`_
+
+.. _PyPI link: https://pypi.org/project/jaraco.text
+
+.. image:: https://dev.azure.com/jaraco/jaraco.text/_apis/build/status/jaraco.text?branchName=master
+   :target: https://dev.azure.com/jaraco/jaraco.text/_build/latest?definitionId=1&branchName=master
 
 .. image:: https://img.shields.io/travis/jaraco/jaraco.text/master.svg
    :target: https://travis-ci.org/jaraco/jaraco.text
