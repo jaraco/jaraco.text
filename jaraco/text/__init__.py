@@ -8,9 +8,9 @@ import functools
 import six
 
 try:
-    from importlib import resources
+    from importlib import resources  # type: ignore
 except ImportError:  # pragma: nocover
-    import importlib_resources as resources
+    import importlib_resources as resources  # type: ignore
 
 from jaraco.functools import compose, method_cache
 
