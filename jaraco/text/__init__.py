@@ -253,7 +253,7 @@ def indent(string, prefix=' ' * 4):
 
 class WordSet(tuple):
     """
-    Given a Python identifier, return the words that identifier represents,
+    Given an identifier, return the words that identifier represents,
     whether in camel case, underscore-separated, etc.
 
     >>> WordSet.parse("camelCase")
@@ -330,6 +330,39 @@ class WordSet(tuple):
 
     def space_separated(self):
         return ' '.join(self)
+
+    def trim_right(self, item):
+        """
+        Remove the item from the end of the set.
+
+        >>> WordSet.parse('foo bar').trim_right('foo')
+        ('foo', 'bar')
+        >>> WordSet.parse('foo bar').trim_right('bar')
+        ('foo',)
+        >>> WordSet.parse('').trim_right('bar')
+        ()
+        """
+        return self[:-1] if self and self[-1] == item else self
+
+    def trim_left(self, item):
+        """
+        Remove the item from the beginning of the set.
+
+        >>> WordSet.parse('foo bar').trim_left('foo')
+        ('bar',)
+        >>> WordSet.parse('foo bar').trim_left('bar')
+        ('foo', 'bar')
+        >>> WordSet.parse('').trim_left('bar')
+        ()
+        """
+        return self[1:] if self and self[0] == item else self
+
+    def trim(self, item):
+        """
+        >>> WordSet.parse('foo bar').trim('foo')
+        ('bar',)
+        """
+        return self.trim_left(item).trim_right(item)
 
     def __getitem__(self, item):
         result = super(WordSet, self).__getitem__(item)

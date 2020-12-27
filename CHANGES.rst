@@ -1,3 +1,8 @@
+v3.4.0
+======
+
+Added ``WordSet.trim*`` methods.
+
 v3.3.0
 ======
 
