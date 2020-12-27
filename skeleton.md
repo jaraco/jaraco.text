@@ -46,6 +46,26 @@ For example, here's a session of the [path project](https://pypi.org/project/pat
 
 Thereafter, the target project can make whatever customizations it deems relevant to the scaffolding. The project may even at some point decide that the divergence is too great to merit renewed merging with the original skeleton. This approach applies maximal guidance while creating minimal constraints.
 
+## Periodic Collapse
+
+In late 2020, this project [introduced](https://github.com/jaraco/skeleton/issues/27) the idea of a periodic but infrequent (O(years)) collapse of commits to limit the number of commits a new consumer will need to accept to adopt the skeleton.
+
+The full history of commits is collapsed into a single commit and that commit becomes the new mainline head.
+
+When one of these collapse operations happens, any project that previously pulled from the skeleton will no longer have a related history with that new main branch. For those projects, the skeleton provides a "handoff" branch that reconciles the two branches. Any project that has previously merged with the skeleton but now gets an error "fatal: refusing to merge unrelated histories" should instead use the handoff branch once to incorporate the new main branch.
+
+```
+$ git pull https://github.com/jaraco/skeleton 2020-handoff
+```
+
+This handoff needs to be pulled just once and thereafter the project can pull from the main head.
+
+The archive and handoff branches from prior collapses are indicate here:
+
+| refresh | archive         | handoff      |
+|---------|-----------------|--------------|
+| 2020-12 | archive/2020-12 | 2020-handoff |
+
 # Features
 
 The features/techniques employed by the skeleton include:
@@ -108,7 +128,7 @@ Relies on a .flake8 file to correct some default behaviors:
 
 ## Continuous Integration
 
-The project is pre-configured to run tests through multiple CI providers.
+The project is pre-configured to run Continuous Integration tests.
 
 ### Github Actions
 
@@ -119,39 +139,13 @@ Features include:
 - run on late (and updated) platform versions
 - automated releases of tagged commits
 
-### Azure Pipelines
-
-[Azure Pipelines](https://azure.microsoft.com/en-us/services/devops/pipelines/) were adopted for free, fast, multi-platform services. See azure-pipelines.yml for more details.
-
-Azure Pipelines require many [complicated setup steps](https://github.com/Azure/azure-devops-cli-extension/issues/968) that have not been readily automated.
-
-Features include:
-
-- test against multiple Python versions
-- run on Ubuntu Bionic
-
-### Travis CI
-
-[Travis CI](https://travis-ci.org) is configured through .travis.yml. Any new project must be enabled either through their web site or with the `travis enable` command.
-
-Features include:
-- test against Python 3
-- run on Ubuntu Bionic
-- correct for broken IPv6
-
-### AppVeyor
-
-A minimal template for running under AppVeyor (Windows) is provided.
-
 ### Continuous Deployments
 
 In addition to running tests, an additional publish stage is configured to automatically release tagged commits to PyPI using [API tokens](https://pypi.org/help/#apitoken). The release process expects an authorized token to be configured with each Github project (or org) `PYPI_TOKEN` [secret](https://docs.github.com/en/free-pro-team@latest/actions/reference/encrypted-secrets). Example:
 
 ```
-pip-run -q setuptools jaraco.develop -- -m jaraco.develop.add-github-secret PYPI_TOKEN $TOKEN --project org/repo
+pip-run -q jaraco.develop -- -m jaraco.develop.add-github-secrets
 ```
-
-<!-- note setuptools is required due to a [bug in munch](https://github.com/Infinidat/munch/issues/67) -->
 
 ## Building Documentation
 
