@@ -225,7 +225,7 @@ def unwrap(s):
     return '\n'.join(cleaned)
 
 
-lorem_ipsum = resources.read_text(__name__, 'Lorem ipsum.txt')
+lorem_ipsum = resources.read_text(__name__, 'Lorem ipsum.txt')  # type: ignore
 
 
 class Splitter(object):
