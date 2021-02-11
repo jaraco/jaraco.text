@@ -1,3 +1,8 @@
+v3.5.0
+======
+
+Rely on PEP 420 for namespace package.
+
 v3.4.0
 ======
 
