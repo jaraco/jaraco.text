@@ -1,3 +1,8 @@
+v3.5.1
+======
+
+#5: Fixed warning in docs builds.
+
 v3.5.0
 ======
 
