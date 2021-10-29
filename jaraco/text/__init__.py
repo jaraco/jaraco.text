@@ -2,11 +2,16 @@ import re
 import itertools
 import textwrap
 import functools
+from typing import TextIO
 
 try:
     from importlib import resources  # type: ignore
+
+    files = None  # type: ignore
 except ImportError:  # pragma: nocover
     import importlib_resources as resources  # type: ignore
+
+    from importlib_resources import files  # type: ignore
 
 from jaraco.functools import compose, method_cache
 
@@ -225,7 +230,17 @@ def unwrap(s):
     return '\n'.join(cleaned)
 
 
-lorem_ipsum = resources.read_text(__name__, 'Lorem ipsum.txt')  # type: ignore
+if files:
+
+    def _read_text(resource, package, encoding='utf-8', errors='strict') -> TextIO:
+        with (files(resource) / package).open(
+            'r', encoding=encoding, errors=errors
+        ) as fp:
+            return fp.read()
+
+    lorem_ipsum = _read_text(__name__, 'Lorem ipsum.txt')
+else:
+    lorem_ipsum = resources.read_text(__name__, 'Lorem ipsum.txt')  # type: ignore
 
 
 class Splitter(object):
