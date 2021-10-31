@@ -1,3 +1,9 @@
+v3.6.0
+======
+
+Fixed ``DeprecationWarning`` in ``importlib.resources.read_text``
+as reported in #7.
+
 v3.5.1
 ======
 
