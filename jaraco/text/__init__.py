@@ -2,7 +2,6 @@ import re
 import itertools
 import textwrap
 import functools
-import contextlib
 
 try:
     from importlib.resources import files  # type: ignore
@@ -10,11 +9,7 @@ except ImportError:  # pragma: nocover
     from importlib_resources import files  # type: ignore
 
 from jaraco.functools import compose, method_cache, apply
-
-
-# copied from jaraco.context:
-class _suppress(contextlib.suppress, contextlib.ContextDecorator):
-    pass
+from jaraco.context import suppress
 
 
 def substitution(old, new):
@@ -135,7 +130,7 @@ class FoldedCase(str):
 
 
 @apply(bool)
-@_suppress(UnicodeDecodeError)
+@suppress(UnicodeDecodeError)
 def is_decodable(value):
     r"""
     Return True if the supplied value is decodable (using the default
