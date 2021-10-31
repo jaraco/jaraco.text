@@ -8,8 +8,8 @@ try:
 except ImportError:  # pragma: nocover
     from importlib_resources import files  # type: ignore
 
-from jaraco.functools import compose, method_cache, apply
-from jaraco.context import suppress
+from jaraco.functools import compose, method_cache
+from jaraco.context import ExceptionTrap
 
 
 def substitution(old, new):
@@ -129,8 +129,11 @@ class FoldedCase(str):
         return pattern.split(self, maxsplit)
 
 
-@apply(bool)
-@suppress(UnicodeDecodeError)
+# Python 3.8 compatibility
+_unicode_trap = ExceptionTrap(UnicodeDecodeError)
+
+
+@_unicode_trap.passes
 def is_decodable(value):
     r"""
     Return True if the supplied value is decodable (using the default
@@ -142,7 +145,6 @@ def is_decodable(value):
     True
     """
     value.decode()
-    return True
 
 
 def is_binary(value):
