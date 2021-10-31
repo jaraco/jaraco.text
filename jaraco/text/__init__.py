@@ -370,10 +370,6 @@ class WordSet(tuple):
             result = WordSet(result)
         return result
 
-    # for compatibility with Python 2
-    def __getslice__(self, i, j):  # pragma: nocover
-        return self.__getitem__(slice(i, j))
-
     @classmethod
     def parse(cls, identifier):
         matches = cls._pattern.finditer(identifier)
