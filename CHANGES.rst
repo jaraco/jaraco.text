@@ -1,3 +1,8 @@
+v3.7.0
+======
+
+Introducing ``yield_lines``, ``drop_comment``, and ``join_continuation``.
+
 v3.6.0
 ======
 
