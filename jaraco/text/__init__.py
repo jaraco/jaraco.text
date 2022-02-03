@@ -2,6 +2,8 @@ import re
 import itertools
 import textwrap
 import functools
+import types
+import sys
 
 try:
     from importlib.resources import files  # type: ignore
@@ -224,7 +226,13 @@ def unwrap(s):
     return '\n'.join(cleaned)
 
 
-lorem_ipsum: str = files(__name__).joinpath('Lorem ipsum.txt').read_text()
+class _Properties(types.ModuleType):
+    @property
+    def lorem_ipsum(self) -> str:
+        return files(__name__).joinpath('Lorem ipsum.txt').read_text()
+
+
+sys.modules[__name__].__class__ = _Properties
 
 
 class Splitter(object):
