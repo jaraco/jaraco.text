@@ -19,3 +19,16 @@
 
 .. image:: https://img.shields.io/badge/skeleton-2021-informational
    :target: https://blog.jaraco.com/skeleton
+
+
+Layouts
+=======
+
+One of the features of this package is the layouts module, which
+provides a simple example of translating keystrokes from one keyboard
+layout to another::
+
+    echo qwerty | python -m jaraco.text.to-dvorak
+    ',.pyf
+    echo  "',.pyf" | python -m jaraco.text.to-qwerty
+    qwerty

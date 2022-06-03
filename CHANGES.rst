@@ -1,3 +1,8 @@
+v3.7.0
+======
+
+Added ``layouts`` module and ``to-qwerty`` and ``to-dvorak`` scripts.
+
 v3.6.0
 ======
 
