@@ -21,6 +21,12 @@
    :target: https://blog.jaraco.com/skeleton
 
 
+This package provides handy routines for dealing with text, such as
+wrapping, substitution, trimming, stripping, prefix and suffix removal,
+line continuation, indentation, comment processing, identifier processing,
+values parsing, case insensitive comparison, and more. See the docs
+(linked in the badge above) for the detailed documentation and examples.
+
 Layouts
 =======
 
