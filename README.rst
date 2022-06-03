@@ -17,7 +17,7 @@
 .. image:: https://readthedocs.org/projects/jaracotext/badge/?version=latest
    :target: https://jaracotext.readthedocs.io/en/latest/?badge=latest
 
-.. image:: https://img.shields.io/badge/skeleton-2021-informational
+.. image:: https://img.shields.io/badge/skeleton-2022-informational
    :target: https://blog.jaraco.com/skeleton
 
 
