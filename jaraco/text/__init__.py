@@ -66,7 +66,7 @@ class FoldedCase(str):
     >>> s in ["Hello World"]
     True
 
-    You may test for set inclusion, but candidate and elements
+    Allows testing for set inclusion, but candidate and elements
     must both be folded.
 
     >>> FoldedCase("Hello World") in {s}
@@ -277,7 +277,7 @@ class WordSet(tuple):
     >>> WordSet.parse("myABCClass")
     ('my', 'ABC', 'Class')
 
-    The result is a WordSet, so you can get the form you need.
+    The result is a WordSet, providing access to other forms.
 
     >>> WordSet.parse("myABCClass").underscore_separated()
     'my_ABC_Class'
