@@ -604,13 +604,13 @@ def read_newlines(filename, limit=1024):
     r"""
     >>> tmp_path = getfixture('tmp_path')
     >>> filename = tmp_path / 'out.txt'
-    >>> _ = filename.write_text('foo\n')
+    >>> _ = filename.write_text('foo\n', newline='')
     >>> read_newlines(filename)
     '\n'
-    >>> _ = filename.write_text('foo\r\n')
+    >>> _ = filename.write_text('foo\r\n', newline='')
     >>> read_newlines(filename)
     '\r\n'
-    >>> _ = filename.write_text('foo\r\nbar\nbing\r')
+    >>> _ = filename.write_text('foo\r\nbar\nbing\r', newline='')
     >>> read_newlines(filename)
     ('\r', '\n', '\r\n')
     """

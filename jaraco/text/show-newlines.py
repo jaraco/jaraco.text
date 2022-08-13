@@ -10,11 +10,13 @@ def report_newlines(filename):
     r"""
     Report the newlines in the indicated file.
 
-    >>> report_newlines(__file__)
-    newline is '\n'
     >>> tmp_path = getfixture('tmp_path')
     >>> filename = tmp_path / 'out.txt'
-    >>> _ = filename.write_text('foo\nbar\r\n')
+    >>> _ = filename.write_text('foo\nbar\n', newline='')
+    >>> report_newlines(filename)
+    newline is '\n'
+    >>> filename = tmp_path / 'out.txt'
+    >>> _ = filename.write_text('foo\nbar\r\n', newline='')
     >>> report_newlines(filename)
     newlines are ('\n', '\r\n')
     """
