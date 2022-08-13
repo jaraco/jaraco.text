@@ -42,6 +42,16 @@ layout to another::
     echo  "',.pyf" | python -m jaraco.text.to-qwerty
     qwerty
 
+Newline Reporting
+=================
+
+Need to know what newlines appear in a file?
+
+::
+
+    $ python -m jaraco.text.show-newlines README.rst
+    newline is '\n'
+
 For Enterprise
 ==============
 

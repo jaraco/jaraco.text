@@ -1,3 +1,8 @@
+v3.9.0
+======
+
+Add ``jaraco.text.show-newlines`` script.
+
 v3.8.1
 ======
 

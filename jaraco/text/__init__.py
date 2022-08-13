@@ -598,3 +598,22 @@ def join_continuation(lines):
             except StopIteration:
                 return
         yield item
+
+
+def read_newlines(filename, limit=1024):
+    r"""
+    >>> tmp_path = getfixture('tmp_path')
+    >>> filename = tmp_path / 'out.txt'
+    >>> _ = filename.write_text('foo\n')
+    >>> read_newlines(filename)
+    '\n'
+    >>> _ = filename.write_text('foo\r\n')
+    >>> read_newlines(filename)
+    '\r\n'
+    >>> _ = filename.write_text('foo\r\nbar\nbing\r')
+    >>> read_newlines(filename)
+    ('\r', '\n', '\r\n')
+    """
+    with open(filename) as fp:
+        fp.read(limit)
+    return fp.newlines
