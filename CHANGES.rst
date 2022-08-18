@@ -1,3 +1,8 @@
+v3.9.1
+======
+
+#10: Fixed broken tests in ``read_newlines`` and ``show-newlines``.
+
 v3.9.0
 ======
 
