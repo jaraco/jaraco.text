@@ -1,3 +1,8 @@
+v3.10.0
+=======
+
+Prefer ``casefold`` in ``FoldedCase``.
+
 v3.9.1
 ======
 

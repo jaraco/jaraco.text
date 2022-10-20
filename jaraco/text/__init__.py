@@ -92,37 +92,40 @@ class FoldedCase(str):
 
     >>> FoldedCase('hello') > FoldedCase('Hello')
     False
+
+    >>> FoldedCase('ß') == FoldedCase('ss')
+    True
     """
 
     def __lt__(self, other):
-        return self.lower() < other.lower()
+        return self.casefold() < other.casefold()
 
     def __gt__(self, other):
-        return self.lower() > other.lower()
+        return self.casefold() > other.casefold()
 
     def __eq__(self, other):
-        return self.lower() == other.lower()
+        return self.casefold() == other.casefold()
 
     def __ne__(self, other):
-        return self.lower() != other.lower()
+        return self.casefold() != other.casefold()
 
     def __hash__(self):
-        return hash(self.lower())
+        return hash(self.casefold())
 
     def __contains__(self, other):
-        return super().lower().__contains__(other.lower())
+        return super().casefold().__contains__(other.casefold())
 
     def in_(self, other):
         "Does self appear in other?"
         return self in FoldedCase(other)
 
-    # cache lower since it's likely to be called frequently.
+    # cache casefold since it's likely to be called frequently.
     @method_cache
-    def lower(self):
-        return super().lower()
+    def casefold(self):
+        return super().casefold()
 
     def index(self, sub):
-        return self.lower().index(sub.lower())
+        return self.casefold().index(sub.casefold())
 
     def split(self, splitter=' ', maxsplit=0):
         pattern = re.compile(re.escape(splitter), re.I)
