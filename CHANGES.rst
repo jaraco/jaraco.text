@@ -1,3 +1,8 @@
+v3.11.0
+=======
+
+Added ``strip-prefix`` script.
+
 v3.10.0
 =======
 
