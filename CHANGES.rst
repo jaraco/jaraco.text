@@ -1,3 +1,8 @@
+v3.11.1
+=======
+
+Fixed ``EncodingWarnings`` when reading/writing text.
+
 v3.11.0
 =======
 

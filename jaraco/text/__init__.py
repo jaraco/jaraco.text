@@ -227,7 +227,9 @@ def unwrap(s):
     return '\n'.join(cleaned)
 
 
-lorem_ipsum: str = files(__name__).joinpath('Lorem ipsum.txt').read_text()
+lorem_ipsum: str = (
+    files(__name__).joinpath('Lorem ipsum.txt').read_text(encoding='utf-8')
+)
 
 
 class Splitter(object):
@@ -607,16 +609,16 @@ def read_newlines(filename, limit=1024):
     r"""
     >>> tmp_path = getfixture('tmp_path')
     >>> filename = tmp_path / 'out.txt'
-    >>> _ = filename.write_text('foo\n', newline='')
+    >>> _ = filename.write_text('foo\n', newline='', encoding='utf-8')
     >>> read_newlines(filename)
     '\n'
-    >>> _ = filename.write_text('foo\r\n', newline='')
+    >>> _ = filename.write_text('foo\r\n', newline='', encoding='utf-8')
     >>> read_newlines(filename)
     '\r\n'
-    >>> _ = filename.write_text('foo\r\nbar\nbing\r', newline='')
+    >>> _ = filename.write_text('foo\r\nbar\nbing\r', newline='', encoding='utf-8')
     >>> read_newlines(filename)
     ('\r', '\n', '\r\n')
     """
-    with open(filename) as fp:
+    with open(filename, encoding='utf-8') as fp:
         fp.read(limit)
     return fp.newlines
