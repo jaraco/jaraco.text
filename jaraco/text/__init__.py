@@ -232,7 +232,7 @@ lorem_ipsum: str = (
 )
 
 
-class Splitter(object):
+class Splitter:
     """object that will split a string with the given arguments for each call
 
     >>> s = Splitter(',')
@@ -369,7 +369,7 @@ class WordSet(tuple):
         return self.trim_left(item).trim_right(item)
 
     def __getitem__(self, item):
-        result = super(WordSet, self).__getitem__(item)
+        result = super().__getitem__(item)
         if isinstance(item, slice):
             result = WordSet(result)
         return result
