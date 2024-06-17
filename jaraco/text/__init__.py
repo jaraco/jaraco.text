@@ -1,15 +1,15 @@
-import re
-import itertools
-import textwrap
 import functools
+import itertools
+import re
+import textwrap
 
 try:
     from importlib.resources import files  # type: ignore
 except ImportError:  # pragma: nocover
     from importlib_resources import files  # type: ignore
 
-from jaraco.functools import compose, method_cache
 from jaraco.context import ExceptionTrap
+from jaraco.functools import compose, method_cache
 
 
 def substitution(old, new):

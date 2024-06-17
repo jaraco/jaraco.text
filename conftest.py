@@ -2,7 +2,6 @@ import sys
 
 import pytest
 
-
 if sys.version_info < (3, 10):
     import pathlib2 as pathlib  # pragma: nocover
 else:
