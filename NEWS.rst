@@ -1,3 +1,12 @@
+v3.14.0
+=======
+
+Features
+--------
+
+- Add new 'clean' function, extracted from 'yield_lines'.
+
+
 v3.13.1
 =======
 
