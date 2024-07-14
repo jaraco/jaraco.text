@@ -1,0 +1,1 @@
+Add new 'clean' function, extracted from 'yield_lines'.

@@ -3,6 +3,8 @@ import itertools
 import re
 import textwrap
 
+from typing import Iterable
+
 try:
     from importlib.resources import files  # type: ignore
 except ImportError:  # pragma: nocover
@@ -554,7 +556,14 @@ def yield_lines(iterable):
 
 @yield_lines.register(str)
 def _(text):
-    return filter(_nonblank, map(str.strip, text.splitlines()))
+    return clean(text.splitlines())
+
+
+def clean(lines: Iterable[str]):
+    """
+    Yield non-blank, non-comment elements from lines.
+    """
+    return filter(_nonblank, map(str.strip, lines))
 
 
 def drop_comment(line):
