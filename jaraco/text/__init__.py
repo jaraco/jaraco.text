@@ -634,5 +634,5 @@ def lines_from(input):
     >>> next(lines)
     'Curabitur pretium...'
     """
-    with input.open() as stream:
+    with input.open(encoding='utf-8') as stream:
         yield from stream
