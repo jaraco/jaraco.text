@@ -1,3 +1,12 @@
+v3.13.0
+=======
+
+Features
+--------
+
+- Add 'lines_from' function.
+
+
 v3.12.1
 =======
 
