@@ -1,3 +1,12 @@
+v3.13.1
+=======
+
+Bugfixes
+--------
+
+- Fix EncodingWarning.
+
+
 v3.13.0
 =======
 
