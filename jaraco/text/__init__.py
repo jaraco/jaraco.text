@@ -10,7 +10,6 @@ try:
 except ImportError:  # pragma: nocover
     from importlib_resources import files  # type: ignore
 
-from jaraco.context import ExceptionTrap
 from jaraco.functools import compose, method_cache
 
 
@@ -134,12 +133,7 @@ class FoldedCase(str):
         return pattern.split(self, maxsplit)
 
 
-# Python 3.8 compatibility
-_unicode_trap = ExceptionTrap(UnicodeDecodeError)
-
-
-@_unicode_trap.passes
-def is_decodable(value):
+def is_decodable(value: bytes) -> bool:
     r"""
     Return True if the supplied value is decodable (using the default
     encoding).
@@ -149,7 +143,11 @@ def is_decodable(value):
     >>> is_decodable(b'\x32')
     True
     """
-    value.decode()
+    try:
+        value.decode()
+        return True
+    except UnicodeDecodeError:
+        return False
 
 
 def is_binary(value):
