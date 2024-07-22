@@ -1,5 +1,4 @@
 import autocommand
-import inflect
 from more_itertools import always_iterable
 
 import jaraco.text
@@ -21,10 +20,8 @@ def report_newlines(filename):
     """
     newlines = jaraco.text.read_newlines(filename)
     count = len(tuple(always_iterable(newlines)))
-    engine = inflect.engine()
     print(
-        engine.plural_noun("newline", count),
-        engine.plural_verb("is", count),
+        *(("newline", "is") if count == 1 else ("newlines", "are")),
         repr(newlines),
     )
 
