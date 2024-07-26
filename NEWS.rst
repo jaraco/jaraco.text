@@ -1,3 +1,12 @@
+v4.0.0
+======
+
+Deprecations and Removals
+-------------------------
+
+- Made 'inflect' an optional dependency. The show-newlines script now will crash unless jaraco.text[inflect] is installed.
+
+
 v3.14.0
 =======
 
