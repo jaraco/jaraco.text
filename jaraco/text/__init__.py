@@ -6,9 +6,15 @@ import textwrap
 from typing import Iterable
 
 try:
-    from importlib.resources import files  # type: ignore
+    from importlib.resources import files as _files  # type: ignore
 except ImportError:  # pragma: nocover
-    from importlib_resources import files  # type: ignore
+
+    def _files(modname):  # type: ignore
+        # Lazily evaluate improtlib_resources.files
+        from importlib_resources import files
+
+        return files(modname)
+
 
 from jaraco.context import ExceptionTrap
 from jaraco.functools import compose, method_cache
@@ -229,9 +235,14 @@ def unwrap(s):
     return '\n'.join(cleaned)
 
 
-lorem_ipsum: str = (
-    files(__name__).joinpath('Lorem ipsum.txt').read_text(encoding='utf-8')
-)
+@functools.lru_cache(maxsize=None)
+def __getattr__(name):
+    # Lazily evaluate attributes that need dependencies
+
+    if name == "lorem_ipsum":
+        return _files(__name__).joinpath('Lorem ipsum.txt').read_text(encoding='utf-8')
+
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
 
 
 class Splitter:
@@ -637,7 +648,8 @@ def lines_from(input):
     """
     Generate lines from a :class:`importlib.resources.abc.Traversable` path.
 
-    >>> lines = lines_from(files(__name__).joinpath('Lorem ipsum.txt'))
+    >>> # from importlib_metadata import files as _files
+    >>> lines = lines_from(_files(__name__).joinpath('Lorem ipsum.txt'))
     >>> next(lines)
     'Lorem ipsum...'
     >>> next(lines)

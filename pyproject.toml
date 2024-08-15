@@ -20,7 +20,7 @@ requires-python = ">=3.8"
 dependencies = [
 	"jaraco.functools",
 	"jaraco.context >= 4.1",
-	'importlib_resources; python_version < "3.9"',
+	'importlib_resources; python_version < "3.9" and extra != "minimal"',
 	"autocommand",
 	"more_itertools",
 ]
@@ -56,5 +56,6 @@ doc = [
 	# local
 ]
 inflect = ["inflect"]
+minimal = []
 
 [tool.setuptools_scm]
