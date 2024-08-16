@@ -21,7 +21,7 @@ dependencies = [
 	"jaraco.functools",
 	"jaraco.context >= 4.1",
 	'importlib_resources; python_version < "3.9" and extra != "minimal"',
-	"autocommand",
+	'autocommand; extra != "minimal"',
 	"more_itertools",
 ]
 dynamic = ["version"]
