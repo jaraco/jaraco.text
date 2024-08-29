@@ -1,14 +1,14 @@
 import functools
 import itertools
 import re
+import sys
 import textwrap
-
 from typing import Iterable
 
-try:
-    from importlib.resources import files  # type: ignore
-except ImportError:  # pragma: nocover
-    from importlib_resources import files  # type: ignore
+if sys.version_info >= (3, 9):
+    from importlib.resources import files
+else:  # pragma: nocover
+    from importlib_resources import files
 
 from jaraco.context import ExceptionTrap
 from jaraco.functools import compose, method_cache
