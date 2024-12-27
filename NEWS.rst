@@ -1,3 +1,11 @@
+v4.0.1
+======
+
+Removals
+--------
+
+- Removed import-time file load of "Lorem Ipsum.txt". If still needed in this namespace, this attribute can be assigned after importing.
+
 v4.0.0
 ======
 

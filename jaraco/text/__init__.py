@@ -229,11 +229,6 @@ def unwrap(s):
     return '\n'.join(cleaned)
 
 
-lorem_ipsum: str = (
-    files(__name__).joinpath('Lorem ipsum.txt').read_text(encoding='utf-8')
-)
-
-
 class Splitter:
     """object that will split a string with the given arguments for each call
 
