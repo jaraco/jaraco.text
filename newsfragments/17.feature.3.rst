@@ -1,0 +1,1 @@
+Support `None` ``splitter`` argument in `jaraco.text.FoldedCase.split` -- by :user:`Avasam`
