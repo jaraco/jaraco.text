@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=61.2", "setuptools_scm[toml]>=3.4.1"]
+requires = ["setuptools>=69.0", "setuptools_scm[toml]>=3.4.1"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -72,6 +72,5 @@ type = [
 
 	# local
 ]
-
 
 [tool.setuptools_scm]
