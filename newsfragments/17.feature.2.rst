@@ -1,0 +1,1 @@
+Add support for ``start`` and ``end`` in `jaraco.text.FoldedCase.index` -- by :user:`Avasam`
