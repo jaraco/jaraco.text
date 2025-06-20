@@ -9,7 +9,9 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "jaraco.text"
-authors = [{ name = "Jason R. Coombs", email = "jaraco@jaraco.com" }]
+authors = [
+	{ name = "Jason R. Coombs", email = "jaraco@jaraco.com" },
+]
 description = "Module for text manipulation"
 readme = "README.rst"
 classifiers = [
@@ -56,11 +58,18 @@ doc = [
 ]
 inflect = ["inflect"]
 
-check = ["pytest-checkdocs >= 2.4", "pytest-ruff >= 0.2.1; sys_platform != 'cygwin'"]
+check = [
+	"pytest-checkdocs >= 2.4",
+	"pytest-ruff >= 0.2.1; sys_platform != 'cygwin'",
+]
 
-cover = ["pytest-cov"]
+cover = [
+	"pytest-cov",
+]
 
-enabler = ["pytest-enabler >= 2.2"]
+enabler = [
+	"pytest-enabler >= 2.2",
+]
 
 type = [
 	# upstream
@@ -68,5 +77,6 @@ type = [
 
 	# local
 ]
+
 
 [tool.setuptools_scm]
