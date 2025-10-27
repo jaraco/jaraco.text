@@ -2,10 +2,6 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-import autocommand
-import inflect
-from more_itertools import always_iterable
-
 import jaraco.text
 
 if TYPE_CHECKING:
@@ -37,4 +33,11 @@ def report_newlines(filename: FileDescriptorOrPath) -> None:
     )
 
 
-autocommand.autocommand(__name__)(report_newlines)
+try:
+    import autocommand
+    import inflect
+    from more_itertools import always_iterable
+
+    autocommand.autocommand(__name__)(report_newlines)
+except ModuleNotFoundError as error:  # pragma: nocover
+    print(f"{error}. Did you forget to install it or 'jaraco.text[scripts]' ?")

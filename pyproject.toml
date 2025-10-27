@@ -25,8 +25,6 @@ license = "MIT"
 dependencies = [
 	"jaraco.functools",
 	"jaraco.context >= 4.1",
-	"autocommand",
-	"more_itertools",
 ]
 dynamic = ["version"]
 
@@ -55,7 +53,11 @@ doc = [
 
 	# local
 ]
-inflect = ["inflect"]
+scripts = [
+	"autocommand",
+	"inflect",
+	"more_itertools",
+]
 
 check = [
 	"pytest-checkdocs >= 2.4",
@@ -78,6 +80,7 @@ type = [
 	"mypy < 1.19; python_implementation == 'PyPy'",
 
 	# local
+	"jaraco.text[scripts]"
 ]
 
 

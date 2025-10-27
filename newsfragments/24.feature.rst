@@ -1,0 +1,1 @@
+Due to concerns with ``autocommand`` being licensed under LGPLv3, the scripts-only dependencies have been made optional and installable with the ``[scripts]`` extra -- by :user:`Avasam`

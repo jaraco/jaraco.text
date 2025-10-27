@@ -1,7 +1,5 @@
 import sys
 
-import autocommand
-
 from jaraco.text import Stripper
 
 
@@ -18,4 +16,9 @@ def strip_prefix() -> None:
     sys.stdout.writelines(Stripper.strip_prefix(sys.stdin).lines)
 
 
-autocommand.autocommand(__name__)(strip_prefix)
+try:
+    import autocommand
+
+    autocommand.autocommand(__name__)(strip_prefix)
+except ModuleNotFoundError as error:  # pragma: nocover
+    print(f"{error}. Did you forget to install it or `jaraco.text[autocommand]` ?")
