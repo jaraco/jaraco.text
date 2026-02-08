@@ -1,7 +1,5 @@
 import sys
 
-import autocommand
-
 from jaraco.text import Stripper
 
 
@@ -18,4 +16,4 @@ def strip_prefix() -> None:
     sys.stdout.writelines(Stripper.strip_prefix(sys.stdin).lines)
 
 
-autocommand.autocommand(__name__)(strip_prefix)
+__name__ == '__main__' and strip_prefix()  # type: ignore[func-returns-value]

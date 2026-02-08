@@ -1,0 +1,1 @@
+Removed ``autocommand`` as a dependency -- by :user:`Avasam`

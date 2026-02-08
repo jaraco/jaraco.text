@@ -25,7 +25,6 @@ license = "MIT"
 dependencies = [
 	"jaraco.functools",
 	"jaraco.context >= 4.1",
-	"autocommand",
 	"more_itertools",
 ]
 dynamic = ["version"]

@@ -7,14 +7,7 @@ import sys
 import textwrap
 from collections.abc import Callable, Generator, Iterable, Sequence
 from importlib.resources import files
-from typing import (
-    TYPE_CHECKING,
-    Literal,
-    Protocol,
-    SupportsIndex,
-    TypeVar,
-    overload,
-)
+from typing import TYPE_CHECKING, Literal, Protocol, SupportsIndex, TypeVar, overload
 
 from jaraco.context import ExceptionTrap
 from jaraco.functools import compose, method_cache

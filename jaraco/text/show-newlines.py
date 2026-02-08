@@ -1,8 +1,8 @@
 from __future__ import annotations
 
+import sys
 from typing import TYPE_CHECKING
 
-import autocommand
 import inflect
 from more_itertools import always_iterable
 
@@ -37,4 +37,4 @@ def report_newlines(filename: FileDescriptorOrPath) -> None:
     )
 
 
-autocommand.autocommand(__name__)(report_newlines)
+__name__ == '__main__' and report_newlines(*sys.argv[1:])  # type: ignore[func-returns-value]
