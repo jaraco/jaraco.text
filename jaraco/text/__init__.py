@@ -663,7 +663,7 @@ def drop_comment(line: str) -> str:
     return line.partition(' #')[0]
 
 
-def join_continuation(lines: SupportsIter[SupportsNext[str]]) -> Generator[str]:
+def join_continuation(lines: SupportsIter[SupportsNext[str]]) -> Generator[str, None, None]:
     r"""
     Join lines continued by a trailing backslash.
 
@@ -735,7 +735,7 @@ def _(
     return filename.newlines
 
 
-def lines_from(input: Traversable) -> Generator[str]:
+def lines_from(input: Traversable) -> Generator[str, None, None]:
     """
     Generate lines from a :class:`importlib.resources.abc.Traversable` path.
 
