@@ -29,12 +29,14 @@ else:  # pragma: no cover
     from importlib.abc import Traversable
 
 if TYPE_CHECKING:
+    from typing import TypeAlias, TypeGuard
+
     from _typeshed import (
         FileDescriptorOrPath,
         SupportsIter,
         SupportsNext,
     )
-    from typing_extensions import Self, TypeAlias, TypeGuard, Unpack
+    from typing_extensions import Self, Unpack
 
     Openable: TypeAlias = FileDescriptorOrPath
 else:
@@ -716,7 +718,7 @@ def join_continuation(lines: SupportsIter[SupportsNext[str]]) -> Generator[str]:
 
 
 # https://docs.python.org/3/library/io.html#io.TextIOBase.newlines
-NewlineSpec: TypeAlias = Union[str, tuple[str, ...], None]
+NewlineSpec: TypeAlias = str | tuple[str, ...] | None
 
 
 @functools.singledispatch
