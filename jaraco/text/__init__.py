@@ -488,6 +488,25 @@ def simple_html_strip(s: str) -> str:
     return ''.join(texts)
 
 
+# ECMA-48 escape sequences: a Fe escape (except CSI) or a CSI sequence.
+_ansi_pattern = re.compile(r'\x1b(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])')
+
+
+def strip_ansi(text: str) -> str:
+    r"""
+    Remove ANSI escape sequences (such as SGR color codes) from `text`.
+
+    >>> strip_ansi('\x1b[1;32m3.24 nsec\x1b[0m \x1b[32mper loop\x1b[0m')
+    '3.24 nsec per loop'
+
+    Text without escape sequences passes through unchanged.
+
+    >>> strip_ansi('plain text')
+    'plain text'
+    """
+    return _ansi_pattern.sub('', text)
+
+
 class SeparatedValues(str):
     """
     A string separated by a separator. Overrides __iter__ for getting
