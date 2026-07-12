@@ -1,3 +1,12 @@
+v4.3.0
+======
+
+Features
+--------
+
+- Added ``strip_ansi`` for removing ANSI escape sequences (e.g. SGR color codes) from a string.
+
+
 v4.2.0
 ======
 
