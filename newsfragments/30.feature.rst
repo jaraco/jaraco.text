@@ -1,0 +1,1 @@
+Moved commands only requirements to a ``commands`` extra -- by :user:`Avasam`
