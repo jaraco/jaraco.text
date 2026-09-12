@@ -600,8 +600,7 @@ def remove_prefix(text: str, prefix: str) -> str:
     >>> remove_prefix('something special', 'sample')
     'something special'
     """
-    null, prefix, rest = text.rpartition(prefix)
-    return rest
+    return text.removeprefix(prefix)
 
 
 def remove_suffix(text: str, suffix: str) -> str:
@@ -614,8 +613,7 @@ def remove_suffix(text: str, suffix: str) -> str:
     >>> remove_suffix('something special', 'sample')
     'something special'
     """
-    rest, suffix, null = text.partition(suffix)
-    return rest
+    return text.removesuffix(suffix)
 
 
 def normalize_newlines(text: str) -> str:

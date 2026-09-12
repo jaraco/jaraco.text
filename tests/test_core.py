@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pytest
 
-from jaraco.text import join_continuation
+from jaraco.text import join_continuation, remove_prefix, remove_suffix
 
 
 def test_join_continuation_typing() -> None:
@@ -28,3 +28,31 @@ def test_join_continuation_typing() -> None:
     bad: dict[int, str] = {i: string for (i, string) in enumerate(good)}
     with pytest.raises(AttributeError):
         list(join_continuation(bad))  # type: ignore[arg-type] # Testing for type error here!
+
+
+@pytest.mark.parametrize(
+    'value, prefix',
+    [
+        ('abcabc', 'abc'),
+        ('xabc', 'abc'),
+        ('abcxabc', 'abc'),
+        ('abc', ''),
+        ('', ''),
+    ],
+)
+def test_remove_prefix_at_start_only(value: str, prefix: str) -> None:
+    assert remove_prefix(value, prefix) == value.removeprefix(prefix)
+
+
+@pytest.mark.parametrize(
+    'value, suffix',
+    [
+        ('abcabc', 'abc'),
+        ('abcx', 'abc'),
+        ('abcxabc', 'abc'),
+        ('abc', ''),
+        ('', ''),
+    ],
+)
+def test_remove_suffix_at_end_only(value: str, suffix: str) -> None:
+    assert remove_suffix(value, suffix) == value.removesuffix(suffix)
