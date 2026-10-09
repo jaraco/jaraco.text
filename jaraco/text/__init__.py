@@ -3,6 +3,7 @@ from __future__ import annotations
 import functools
 import io
 import itertools
+import operator
 import os
 import re
 import sys
@@ -204,7 +205,7 @@ class FoldedCase(str):
     def split(
         self, splitter: str | None = ' ', maxsplit: SupportsIndex = 0
     ) -> list[str]:
-        return super().split(None, maxsplit=int(maxsplit) or -1)
+        return super().split(None, maxsplit=operator.index(maxsplit) or -1)
 
     @split.register
     def _(self, splitter: str, maxsplit: SupportsIndex = 0) -> list[str]:
