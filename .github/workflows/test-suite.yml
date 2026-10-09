@@ -11,6 +11,10 @@ on:
         description: Runner platform
         type: string
         default: ubuntu-latest
+      continue-on-error:
+        description: Allow failures for experimental environments
+        type: boolean
+        default: false
       tox-env:
         description: >-
           Tox environment to run; if empty, runs default tox
@@ -32,6 +36,7 @@ env:
 jobs:
   run:
     runs-on: ${{ inputs.platform }}
+    continue-on-error: ${{ inputs.continue-on-error }}
     permissions:
       contents: read
     steps:
