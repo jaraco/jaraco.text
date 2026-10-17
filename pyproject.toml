@@ -39,7 +39,6 @@ test = [
 	"pytest >= 6, != 8.1.*",
 
 	# local
-	'pathlib2; python_version < "3.10"',
 ]
 
 doc = [
