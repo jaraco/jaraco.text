@@ -43,8 +43,7 @@ jobs:
     with:
       python: ${{ matrix.python }}
       platform: ${{ matrix.platform }}
-    # https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#jobsjob_idcontinue-on-error
-    continue-on-error: ${{ matrix.python == '3.15' }}
+    secrets: inherit
 
   collateral:
     strategy:
@@ -57,6 +56,7 @@ jobs:
     with:
       platform: ubuntu-latest
       tox-env: ${{ matrix.job }}
+    secrets: inherit
 
   check:  # This job does nothing and is only used for the branch protection
     if: always()
