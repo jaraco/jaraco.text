@@ -1,8 +1,10 @@
 from __future__ import annotations
 
+import bisect
 import functools
 import io
 import itertools
+import operator
 import os
 import re
 import sys
@@ -198,7 +200,70 @@ class FoldedCase(str):
         start: SupportsIndex | None = None,
         end: SupportsIndex | None = None,
     ) -> int:
-        return self.casefold().index(sub.casefold(), start, end)
+        start = None if start is None else operator.index(start)
+        end = None if end is None else operator.index(end)
+        # Normalize bounds against the original string, including empty matches.
+        start = super().index('', start, end)
+        end = slice(start, end).indices(len(self))[1]
+        folded_sub = sub.casefold()
+        if not folded_sub:
+            return start
+        folded = self.casefold()
+        # Case folding never deletes characters. With no expansions, offsets
+        # are unchanged (including ASCII); reuse the cached fold without slices.
+        if len(folded) == len(self):
+            return folded.index(folded_sub, start, end)
+        offsets = self._index_offsets()
+        offset = folded.index(
+            folded_sub,
+            self._folded_offset(start, offsets),
+            self._folded_offset(end, offsets),
+        )
+        block = bisect.bisect_right(offsets, offset) - 1
+        source = block * self._index_block_size
+        return (
+            source
+            + bisect.bisect_right(
+                self._index_block_offsets(block), offset - offsets[block]
+            )
+            - 1
+        )
+
+    _index_block_size = 1024
+
+    @functools.partial(method_cache, cache_wrapper=functools.lru_cache(maxsize=8))
+    def _index_block_offsets(self, block: int) -> list[int]:
+        # Bound the detailed maps independently of string length. Advancing
+        # searches can reuse their current block without rebuilding its map.
+        start = block * self._index_block_size
+        return list(
+            itertools.accumulate(
+                (
+                    len(char.casefold())
+                    for char in self[start : start + self._index_block_size]
+                ),
+                initial=0,
+            )
+        )
+
+    @method_cache
+    def _index_offsets(self) -> list[int]:
+        # One checkpoint per block, cached per immutable instance. Keep both
+        # retained metadata and temporary slices small, even for dense expansions.
+        return list(
+            itertools.accumulate(
+                (
+                    len(self[pos : pos + self._index_block_size].casefold())
+                    for pos in range(0, len(self), self._index_block_size)
+                ),
+                initial=0,
+            )
+        )
+
+    def _folded_offset(self, source: int, offsets: list[int]) -> int:
+        block, remainder = divmod(source, self._index_block_size)
+        start = block * self._index_block_size
+        return offsets[block] + len(self[start : start + remainder].casefold())
 
     @functools.singledispatchmethod
     def split(
