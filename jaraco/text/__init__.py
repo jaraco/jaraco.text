@@ -16,7 +16,6 @@ from typing import (
     SupportsIndex,
     TypeVar,
     Union,
-    cast,
     overload,
 )
 
@@ -208,7 +207,7 @@ class FoldedCase(str):
 
     @split.register
     def _(self, splitter: str, maxsplit: SupportsIndex = 0) -> list[str]:
-        pattern = re.compile(re.escape(splitter), re.I)
+        pattern = re.compile(re.escape(splitter), re.IGNORECASE)
         return pattern.split(self, int(maxsplit))
 
 
@@ -570,7 +569,7 @@ class Stripper:
     def __call__(self, line: str) -> str:
         if not self.prefix:
             return line
-        null, prefix, rest = line.partition(self.prefix)
+        _null, _prefix, rest = line.partition(self.prefix)
         return rest
 
     @overload
@@ -600,7 +599,7 @@ def remove_prefix(text: str, prefix: str) -> str:
     >>> remove_prefix('something special', 'sample')
     'something special'
     """
-    null, prefix, rest = text.rpartition(prefix)
+    _null, prefix, rest = text.rpartition(prefix)
     return rest
 
 
@@ -614,7 +613,7 @@ def remove_suffix(text: str, suffix: str) -> str:
     >>> remove_suffix('something special', 'sample')
     'something special'
     """
-    rest, suffix, null = text.partition(suffix)
+    rest, suffix, _null = text.partition(suffix)
     return rest
 
 
@@ -739,10 +738,7 @@ def read_newlines(
     >>> read_newlines(filename)
     ('\r', '\n', '\r\n')
     """
-    if sys.version_info >= (3, 10):
-        assert isinstance(filename, Openable)
-    else:  # pragma: no cover
-        filename = cast(Openable, filename)
+    assert isinstance(filename, Openable)
     with open(filename, encoding='utf-8') as fp:
         return read_newlines(fp, limit=limit)
 

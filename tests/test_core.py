@@ -17,7 +17,7 @@ def test_join_continuation_typing() -> None:
     # Ensure consistency at runtime for different iterables and no type error
     assert list(join_continuation(good)) == expected
     assert list(join_continuation(tuple(good))) == expected
-    assert list(join_continuation(map(lambda string: string, good))) == expected
+    assert list(join_continuation(map(lambda string: string, good))) == expected  # noqa: C417 # deliberately a map object
     assert list(join_continuation(iter(good))) == expected
     assert list(join_continuation({string: None for string in good})) == expected
 
