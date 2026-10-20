@@ -55,7 +55,7 @@ def substitution(old: str, new: str) -> Callable[[str], str]:
     return lambda s: s.replace(old, new)
 
 
-def multi_substitution(*substitutions: str) -> Callable[[str], str]:
+def multi_substitution(*substitutions: Iterable[str]) -> Callable[[str], str]:
     """
     Take a sequence of pairs specifying substitutions, and create
     a function that performs those substitutions.
