@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pytest
 
-from jaraco.text import join_continuation
+from jaraco.text import join_continuation, multi_substitution
 
 
 def test_join_continuation_typing() -> None:
@@ -28,3 +28,9 @@ def test_join_continuation_typing() -> None:
     bad: dict[int, str] = {i: string for (i, string) in enumerate(good)}
     with pytest.raises(AttributeError):
         list(join_continuation(bad))  # type: ignore[arg-type] # Testing for type error here!
+
+
+def test_multi_substitution_typing() -> None:
+    assert multi_substitution(('foo', 'bar'), ('bar', 'baz'))('foo') == 'baz'
+    assert multi_substitution(['foo', 'bar'])('foo') == 'bar'
+    assert multi_substitution(iter(('foo', 'bar')))('foo') == 'bar'
