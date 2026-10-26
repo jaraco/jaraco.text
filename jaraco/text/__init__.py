@@ -489,8 +489,17 @@ def simple_html_strip(s: str) -> str:
     return ''.join(texts)
 
 
-# ECMA-48 escape sequences: a Fe escape (except CSI) or a CSI sequence.
-_ansi_pattern = re.compile(r'\x1b(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])')
+# ECMA-48 escape sequences: a control string (OSC, DCS, SOS, PM or APC)
+# through its terminator, a CSI sequence, or any other Fe escape. Control
+# strings end with ST (ESC \); OSC may also end with BEL, as xterm allows.
+_ansi_pattern = re.compile(
+    r'\x1b(?:'
+    r'\][^\x07\x1b]*(?:\x07|\x1b\\)'
+    r'|[PX^_][^\x1b]*\x1b\\'
+    r'|\[[0-?]*[ -/]*[@-~]'
+    r'|[@-Z\\-_]'
+    r')'
+)
 
 
 def strip_ansi(text: str) -> str:
@@ -499,6 +508,14 @@ def strip_ansi(text: str) -> str:
 
     >>> strip_ansi('\x1b[1;32m3.24 nsec\x1b[0m \x1b[32mper loop\x1b[0m')
     '3.24 nsec per loop'
+
+    Control strings, such as OSC hyperlinks and window titles, are removed
+    along with their payload.
+
+    >>> strip_ansi('\x1b]8;;https://example.com\x1b\\link\x1b]8;;\x1b\\')
+    'link'
+    >>> strip_ansi('\x1b]0;window title\x07prompt')
+    'prompt'
 
     Text without escape sequences passes through unchanged.
 
