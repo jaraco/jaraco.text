@@ -155,6 +155,12 @@ class FoldedCase(str):
     def __gt__(self, other: str) -> bool:
         return self.casefold() > other.casefold()
 
+    def __le__(self, other: str) -> bool:
+        return self.casefold() <= other.casefold()
+
+    def __ge__(self, other: str) -> bool:
+        return self.casefold() >= other.casefold()
+
     @functools.singledispatchmethod
     def __eq__(self, other: object) -> bool:
         return False
