@@ -28,3 +28,10 @@ def test_join_continuation_typing() -> None:
     bad: dict[int, str] = {i: string for (i, string) in enumerate(good)}
     with pytest.raises(AttributeError):
         list(join_continuation(bad))  # type: ignore[arg-type] # Testing for type error here!
+
+
+def test_join_continuation_edge_cases() -> None:
+    """Edge cases for join_continuation."""
+    assert list(join_continuation([])) == []
+    assert list(join_continuation(['\\'])) == []
+    assert list(join_continuation(['foo \\', 'bar \\'])) == []
