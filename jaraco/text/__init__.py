@@ -397,7 +397,7 @@ class WordSet(tuple[str, ...]):
 
     def headless_camel_case(self) -> str:
         words = iter(self)
-        first = next(words).lower()
+        first = next(words, '').lower()
         new_words = itertools.chain((first,), WordSet(words).camel_case())
         return ''.join(new_words)
 
