@@ -2,7 +2,12 @@ from __future__ import annotations
 
 import pytest
 
-from jaraco.text import join_continuation
+from jaraco.text import WordSet, join_continuation
+
+
+@pytest.mark.parametrize('identifier', ['', '   ', '---'])
+def test_empty_headless_camel_case(identifier: str) -> None:
+    assert WordSet.parse(identifier).headless_camel_case() == ''
 
 
 def test_join_continuation_typing() -> None:
