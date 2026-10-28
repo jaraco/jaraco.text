@@ -563,7 +563,9 @@ class Stripper:
     @classmethod
     def strip_prefix(cls, lines: Iterable[str]) -> Self:
         prefix_lines, lines = itertools.tee(lines)
-        prefix = functools.reduce(cls.common_prefix, prefix_lines)
+        prefix = functools.reduce(
+            cls.common_prefix, prefix_lines, next(prefix_lines, '')
+        )
         return cls(prefix, lines)
 
     def __call__(self, line: str) -> str:
