@@ -2,7 +2,20 @@ from __future__ import annotations
 
 import pytest
 
-from jaraco.text import join_continuation
+from jaraco.text import join_continuation, simple_html_strip
+
+
+@pytest.mark.parametrize(
+    ('source', 'expected'),
+    [
+        ('1 < 2', '1 < 2'),
+        ('trailing <', 'trailing <'),
+        ('<p>value</p> <', 'value <'),
+        ('<!-- hide < this -->visible <', 'visible <'),
+    ],
+)
+def test_html_strip_preserves_unmatched_less_than(source: str, expected: str) -> None:
+    assert simple_html_strip(source) == expected
 
 
 def test_join_continuation_typing() -> None:

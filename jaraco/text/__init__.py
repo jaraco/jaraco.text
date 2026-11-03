@@ -484,7 +484,7 @@ def simple_html_strip(s: str) -> str:
     What about
     multiple lines?
     """
-    html_stripper = re.compile('(<!--.*?-->)|(<[^>]*>)|([^<]+)', re.DOTALL)
+    html_stripper = re.compile('(<!--.*?-->)|(<[^>]*>)|([^<]+|<)', re.DOTALL)
     texts = (match.group(3) or '' for match in html_stripper.finditer(s))
     return ''.join(texts)
 
