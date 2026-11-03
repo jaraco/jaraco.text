@@ -3,6 +3,7 @@ from __future__ import annotations
 import functools
 import io
 import itertools
+import operator
 import os
 import re
 import sys
@@ -94,7 +95,7 @@ class FoldedCase(str):
     >>> s.split('O')
     ['hell', ' w', 'rld']
 
-    Like ``str``, split accepts None as ''.
+    Like ``str``, split accepts None to split on runs of whitespace.
 
     >>> s.split(None)
     ['hello', 'world']
@@ -203,7 +204,7 @@ class FoldedCase(str):
     def split(
         self, splitter: str | None = ' ', maxsplit: SupportsIndex = 0
     ) -> list[str]:
-        return self.split(' ', maxsplit=maxsplit)
+        return super().split(None, maxsplit=operator.index(maxsplit) or -1)
 
     @split.register
     def _(self, splitter: str, maxsplit: SupportsIndex = 0) -> list[str]:
